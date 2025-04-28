@@ -2,16 +2,14 @@ package com.hackaton.equipeum.controller;
 
 import com.hackaton.equipeum.entity.Funcionario;
 import com.hackaton.equipeum.repository.FuncionarioRepository;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@RestController
+@Controller
 @RequestMapping("/funcionarios")
 public class FuncionarioController {
-
     private final FuncionarioRepository funcionarioRepository;
 
     public FuncionarioController(FuncionarioRepository funcionarioRepository) {
@@ -24,7 +22,7 @@ public class FuncionarioController {
     }
 
     @GetMapping
-    public List<Funcionario> listarFuncionarios() {
-        return funcionarioRepository.findAll();
+    public ResponseEntity<List<Funcionario>> listarFuncionarios() {
+        return ResponseEntity.status(200).body(funcionarioRepository.findAll());
     }
 }

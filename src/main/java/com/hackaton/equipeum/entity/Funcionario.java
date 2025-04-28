@@ -1,7 +1,6 @@
 package com.hackaton.equipeum.entity;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

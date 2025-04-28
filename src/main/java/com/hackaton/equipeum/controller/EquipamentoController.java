@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +27,8 @@ public class EquipamentoController {
         return equipamentoService.cadastrarEquipamento(equipamentoDTO);
     }
 
-    @GetMapping("/buscarTodos/{id}")
-    public Optional<Equipamento> buscarTodos(@PathVariable String id) {
-        return equipamentoService.listarEquipamentos(id);
+    @GetMapping("/buscar-todos")
+    public ResponseEntity<List<Equipamento>> buscarTodos() {
+        return equipamentoService.listarEquipamentos();
     }
 }
