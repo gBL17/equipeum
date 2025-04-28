@@ -14,10 +14,12 @@ import java.util.List;
 
 @Service
 public class EquipamentoService {
-    private final EquipamentoRepository equipamentoRepository;;
+    private final EquipamentoRepository equipamentoRepository;
+    private final EquipamentoMapper equipamentoMapper;
 
-    public EquipamentoService(EquipamentoRepository equipamentoRepository) {
+    public EquipamentoService(EquipamentoRepository equipamentoRepository, EquipamentoMapper equipamentoMapper) {
         this.equipamentoRepository = equipamentoRepository;
+        this.equipamentoMapper = equipamentoMapper;
     }
 
     public ResponseEntity<?> cadastrarEquipamento(String modelo, String marca, String cor, CategoriaEquipamento categoria) {
@@ -25,7 +27,7 @@ public class EquipamentoService {
         EquipamentoDTO equipamentoDTO = new EquipamentoDTO(descricao);
         return ResponseEntity.status(200)
                 .body(equipamentoRepository
-                        .save(EquipamentoMapper.map(equipamentoDTO)));
+                        .save(equipamentoMapper.map(equipamentoDTO)));
     }
 
     public ResponseEntity<List<Equipamento>> listarEquipamentos() {
