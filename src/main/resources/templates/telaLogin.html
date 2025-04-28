@@ -3,24 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
 
+        body {
+          font-family: 'Roboto', sans-serif;
+          background-color: #f2f2f2;
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        form {
+          width: 100%;
+          max-width: 400px;
+          background-color: rgba(255, 255, 255, 0.95);
+          padding: 40px;
+          border-radius: 12px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+          margin-top: 50px;
+        }
+
+        h2 {
+          text-align: center;
+          color: #333;
+          margin-bottom: 30px;
+          font-size: 26px;
+        }
+
+        form label {
+          display: block;
+          margin-top: 15px;
+          font-weight: bold;
+          color: #444;
+        }
+
+        form input {
+          width: 100%;
+          padding: 12px;
+          margin-top: 8px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          font-size: 16px;
+        }
+
+        form button {
+          width: 100%;
+          padding: 14px;
+          background-color: #007BFF;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          margin-top: 25px;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+          background-color: #0056b3;
+        }
+
+        nav {
+          margin-top: 20px;
+          text-align: center;
+        }
+
+        nav a {
+          color: #007BFF;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        nav a:hover {
+          text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+          form {
+            margin: 20px;
+            padding: 30px;
+          }
+        }
+    </style>
 </head>
 <body>
 <form action="/funcionario/login" method="post">
-<h2>Login</h2>
+    <h2>Login</h2>
 
-<label for="cpf">CPF</label>
-<input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required></br>
+    <label for="cpf">CPF</label>
+    <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required>
 
-<label for="senha">Senha</label>
-<input type="password" id="senha" name="senha" placeholder="Digite sua senha" required></br>
+    <label for="senha">Senha</label>
+    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
 
-<button type="submit">Login</button>
-<nav>
-  <a href="funcionario/cadastro">Cadastrar Funcionário</a>
-</nav>
+    <button type="submit">Login</button>
 
-
+    <nav>
+        <a href="/funcionario/cadastro">Cadastrar Funcionário</a>
+    </nav>
 </form>
 </body>
 </html>
