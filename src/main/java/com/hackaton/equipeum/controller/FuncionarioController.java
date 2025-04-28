@@ -42,4 +42,9 @@ public class FuncionarioController {
 
         return ResponseEntity.ok("Funcionário inativado com sucesso!");
     }
+
+    @GetMapping("/login")
+    public String getHtmlLogin() {
+        return "telaLogin";
+    }
 }

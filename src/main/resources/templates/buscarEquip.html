@@ -6,7 +6,8 @@
 </head>
 <link rel="stylesheet" href="styles.css">
 <body>
-<form action="/equipamento/buscar" method="post">
+<form action="/equipamento/buscar-todos" method="get">
+    <label for="descricaoCompleta"></label>
     <label for="nomeEquip">Insira o nome do equipamento:</label>
     <input type="text" id="nomeEquip" name="nomeEquip" required>
     <button type="submit" id="buscarEquip">Buscar</button></br>
