@@ -1,16 +1,9 @@
 package com.hackaton.equipeum.entity;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
-@Builder
 @Document(collection = "equipamentos")
 public class Equipamento {
     @Id
@@ -18,10 +11,39 @@ public class Equipamento {
     @NotBlank
     private String patrimonio;
     @NotBlank
-    private String descricao;
+    private String descricaoCompleta;
 
-    public Equipamento(String patrimonio, String descricao) {
-        this.descricao = descricao;
+    public Equipamento() {
+    }
+
+    public Equipamento(String patrimonio, String descricaoCompleta) {
         this.patrimonio = patrimonio;
+        this.descricaoCompleta = descricaoCompleta;
+    }
+
+    public Equipamento(String id, String patrimonio, String descricaoCompleta) {
+        this.id = id;
+        this.patrimonio = patrimonio;
+        this.descricaoCompleta = descricaoCompleta;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getPatrimonio() {
+        return patrimonio;
+    }
+
+    public void setPatrimonio(String patrimonio) {
+        this.patrimonio = patrimonio;
+    }
+
+    public String getDescricaoCompleta() {
+        return descricaoCompleta;
+    }
+
+    public void setDescricaoCompleta(String descricaoCompleta) {
+        this.descricaoCompleta = descricaoCompleta;
     }
 }
