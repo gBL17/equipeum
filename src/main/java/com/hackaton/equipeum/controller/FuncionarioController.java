@@ -34,4 +34,3 @@ public class FuncionarioController {
 //                .collect(Collectors.toList());
 //    }
 }
-
