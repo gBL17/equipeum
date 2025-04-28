@@ -3,6 +3,7 @@ package com.hackaton.equipeum.entity;
 import com.hackaton.equipeum.entity.enums.StatusFuncionario;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "funcionarios")
@@ -12,6 +13,7 @@ public class Funcionario {
     @NotBlank
     private String nome;
     @NotBlank
+    @Indexed(unique = true)
     private String cpf;
     private StatusFuncionario status;
 

@@ -32,7 +32,7 @@ public class FuncionarioController {
     public ResponseEntity<String> inativarFuncionario(@PathVariable String id) {
         Funcionario funcionario = funcionarioRepository.findById(id).orElse(null);
         if (funcionario == null) {
-            return ResponseEntity.notFound().build(); // 404 Not Found
+            return ResponseEntity.notFound().build();
         }
         if (funcionario.getStatus() == StatusFuncionario.Inativo) {
             return ResponseEntity.badRequest().body("Funcionário já está inativo.");
@@ -40,6 +40,6 @@ public class FuncionarioController {
         funcionario.setStatus(StatusFuncionario.Inativo);
         funcionarioRepository.save(funcionario);
 
-        return ResponseEntity.ok("Funcionário inativado com sucesso!"); // 200 OK
+        return ResponseEntity.ok("Funcionário inativado com sucesso!");
     }
 }
