@@ -33,13 +33,13 @@ public class FuncionarioService {
 
     public ResponseEntity<?> inativarFuncionarioPorCpf(String cpf){
         Funcionario funcionario = funcionarioRepository.findByCpf(cpf).orElse(null);
-        if (funcionario == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        if (funcionario.getStatus() == StatusFuncionario.Inativo) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Funcionário já está inativo.");
-        }
-        funcionario.setStatus(StatusFuncionario.Inativo);
+//        if (funcionario == null) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//        if (funcionario.getStatus() == StatusFuncionario.Inativo) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Funcionário já está inativo.");
+//        }
+//        funcionario.setStatus(StatusFuncionario.Inativo);
 
         return ResponseEntity.status(HttpStatus.OK).body(funcionarioRepository.save(funcionario));
     }

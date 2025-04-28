@@ -40,7 +40,7 @@ public class FuncionarioController {
         return funcionarioService.inativarFuncionario(id);
     }
 
-    @PutMapping("/inativar/{cpf}")
+    @PutMapping("/inativar-cpf/{cpf}")
     public ResponseEntity<?> inativarFuncionarioPorCpf(@PathVariable String cpf) {
         return funcionarioService.inativarFuncionarioPorCpf(cpf);
     }
