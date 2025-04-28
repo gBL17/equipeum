@@ -1,19 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Lista de Equipamentos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-detalhes {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-detalhes:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
-<link rel="stylesheet" href="styles.css">
 <body>
-<form action="/equipamento/buscar-todos" method="get">
-    <label for="descricaoCompleta"></label>
-    <label for="nomeEquip">Insira o nome do equipamento:</label>
-    <input type="text" id="nomeEquip" name="nomeEquip" required>
-    <button type="submit" id="buscarEquip">Buscar</button></br>
-    <nav>
-        <a href="">Voltar</a>
-    </nav>
-</form>
+<h1>Lista de Equipamentos</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Patrimônio</th>
+        <th>Modelo</th>
+        <th>Marca</th>
+        <th>Cor</th>
+<!--        <th>Ações</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="equipamento : ${equipamentos}">
+        <td th:text="${equipamento.patrimonio}"></td>
+        <td th:text="${equipamento.descricaoCompleta.modelo}"></td>
+        <td th:text="${equipamento.descricaoCompleta.marca}"></td>
+        <td th:text="${equipamento.descricaoCompleta.cor}"></td>
+<!--        <td>-->
+<!--            <a th:href="@{'/equipamentos/' + ${equipamento.id}}" class="btn-detalhes">Detalhes</a>-->
+<!--        </td>-->
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
+
