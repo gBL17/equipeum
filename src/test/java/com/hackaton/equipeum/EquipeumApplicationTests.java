@@ -9,5 +9,4 @@ class EquipeumApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
