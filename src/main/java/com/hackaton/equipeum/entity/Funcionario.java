@@ -2,6 +2,7 @@ package com.hackaton.equipeum.entity;
 
 import com.hackaton.equipeum.entity.enums.StatusFuncionario;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;

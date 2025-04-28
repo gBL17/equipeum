@@ -63,12 +63,20 @@ public class FuncionarioService {
     }
 
     public ResponseEntity<?> criarFuncionario(Funcionario funcionario) {
+        if (funcionarioRepository.findByCpf(funcionario.getCpf()).isPresent()) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body("Já existe um funcionário cadastrado com este CPF");
+        }
+
         funcionario.setStatus(StatusFuncionario.Ativo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioRepository.save(funcionario));
+        Funcionario funcionarioSalvo = funcionarioRepository.save(funcionario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioSalvo);
     }
 
     public ResponseEntity<?> loginFuncionario(String nome, String cpf, String senha) {
         CadastroDTO cadastroDTO = new CadastroDTO(nome, cpf, senha);
         return ResponseEntity.status(200).body((Funcionario)this.funcionarioRepository.save(this.funcionarioMapper.map(cadastroDTO)));
     }
+
 }

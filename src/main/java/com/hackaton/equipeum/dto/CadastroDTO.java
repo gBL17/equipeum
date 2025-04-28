@@ -1,8 +1,12 @@
 package com.hackaton.equipeum.dto;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 public class CadastroDTO {
 
     private String nome;
+
+    @CPF
     private String cpf;
     private String senha;
 
