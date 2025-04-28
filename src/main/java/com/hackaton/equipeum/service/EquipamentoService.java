@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class EquipamentoService {
     @Autowired
@@ -19,5 +21,9 @@ public class EquipamentoService {
         return ResponseEntity.status(200)
                 .body(equipamentoRepository
                         .save(EquipamentoMapper.map(equipamentoDTO)));
+    }
+
+    public Optional<Equipamento> listarEquipamentos(String id) {
+        return equipamentoRepository.findById(id);
     }
 }
