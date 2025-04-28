@@ -31,4 +31,9 @@ public class EquipamentoController {
     public ResponseEntity<List<Equipamento>> buscarTodos() {
         return equipamentoService.listarEquipamentos();
     }
+
+    @GetMapping("/cadastro")
+    public String getHtmlCadastro() {
+        return "cadastrarEquipamento";
+    }
 }
