@@ -28,4 +28,3 @@ public class FuncionarioController {
         return funcionarioRepository.findAll();
     }
 }
-
