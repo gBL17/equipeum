@@ -1,22 +1,37 @@
 package com.hackaton.equipeum.controller;
 
-import com.hackaton.equipeum.dto.funcionario.FuncionarioRequest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.hackaton.equipeum.entity.Funcionario;
+import com.hackaton.equipeum.repository.FuncionarioRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping("/funcionarios")
 public class FuncionarioController {
 
-    @PostMapping("/cadastro")
-    public ResponseEntity<String> cadastro(@RequestBody FuncionarioRequest request) {
-        String nome = request.getNome();
-        String cpf = request.getCpf();
-        boolean status = request.isStatus();
+    private final FuncionarioRepository funcionarioRepository;
 
-        return ResponseEntity.ok("Cadastro realizado com sucesso!");
+    public FuncionarioController(FuncionarioRepository funcionarioRepository) {
+        this.funcionarioRepository = funcionarioRepository;
     }
+
+    @PostMapping
+    public Funcionario criarFuncionario(@RequestBody Funcionario funcionario) {
+        return funcionarioRepository.save(funcionario);
+    }
+
+//    @GetMapping
+//    public List<FuncionarioResponse> listarFuncionarios() {
+//        return funcionarioRepository.findAll().stream()
+//                .map(f -> FuncionarioResponse.builder()
+//                        .id(f.getId())
+//                        .nome(f.getNome())
+//                        .cpf(f.getCpf())
+//                        .status(f.getStatus())
+//                        .build())
+//                .collect(Collectors.toList());
+//    }
 }
+
