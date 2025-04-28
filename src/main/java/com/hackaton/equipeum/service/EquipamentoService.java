@@ -6,7 +6,6 @@ import com.hackaton.equipeum.entity.Equipamento;
 import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
 import com.hackaton.equipeum.mapper.EquipamentoMapper;
 import com.hackaton.equipeum.repository.EquipamentoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

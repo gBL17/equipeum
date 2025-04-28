@@ -1,9 +1,7 @@
 package com.hackaton.equipeum.entity;
 
-import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
-import com.hackaton.equipeum.repository.EquipamentoRepository;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
@@ -16,7 +14,7 @@ public class Equipamento {
     private String id;
     @NotBlank
     private String patrimonio;
-    @NotBlank
+    @NotNull
     private Descricao descricaoCompleta;
 
     public Equipamento() {

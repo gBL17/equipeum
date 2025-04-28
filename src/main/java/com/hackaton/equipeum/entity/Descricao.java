@@ -8,6 +8,9 @@ public class Descricao {
     private String cor;
     private CategoriaEquipamento categoria;
 
+    public Descricao() {
+    }
+
     public Descricao(String modelo, String marca, String cor, CategoriaEquipamento categoria) {
         this.modelo = modelo;
         this.marca = marca;
