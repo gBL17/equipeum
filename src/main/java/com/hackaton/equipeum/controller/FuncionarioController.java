@@ -1,14 +1,14 @@
 package com.hackaton.equipeum.controller;
 
 import com.hackaton.equipeum.entity.Funcionario;
+import com.hackaton.equipeum.entity.enums.StatusFuncionario;
 import com.hackaton.equipeum.repository.FuncionarioRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@Controller
-@RequestMapping("/funcionarios")
+@RestController
+@RequestMapping("/funcionario")
 public class FuncionarioController {
     private final FuncionarioRepository funcionarioRepository;
 
@@ -16,13 +16,30 @@ public class FuncionarioController {
         this.funcionarioRepository = funcionarioRepository;
     }
 
-    @PostMapping
+    @PostMapping("/cadastro")
     public Funcionario criarFuncionario(@RequestBody Funcionario funcionario) {
+        funcionario.setStatus(StatusFuncionario.Ativo);
         return funcionarioRepository.save(funcionario);
     }
 
-    @GetMapping
+    @GetMapping("/buscar-todos")
     public ResponseEntity<List<Funcionario>> listarFuncionarios() {
-        return ResponseEntity.status(200).body(funcionarioRepository.findAll());
+        List<Funcionario> funcionariosAtivos = funcionarioRepository.findByStatus(StatusFuncionario.Ativo);
+        return ResponseEntity.ok(funcionariosAtivos);
+    }
+
+    @PutMapping("/inativar/{id}")
+    public ResponseEntity<String> inativarFuncionario(@PathVariable String id) {
+        Funcionario funcionario = funcionarioRepository.findById(id).orElse(null);
+        if (funcionario == null) {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
+        if (funcionario.getStatus() == StatusFuncionario.Inativo) {
+            return ResponseEntity.badRequest().body("Funcionário já está inativo.");
+        }
+        funcionario.setStatus(StatusFuncionario.Inativo);
+        funcionarioRepository.save(funcionario);
+
+        return ResponseEntity.ok("Funcionário inativado com sucesso!"); // 200 OK
     }
 }

@@ -1,5 +1,6 @@
 package com.hackaton.equipeum.entity;
 
+import com.hackaton.equipeum.entity.enums.StatusFuncionario;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +13,7 @@ public class Funcionario {
     private String nome;
     @NotBlank
     private String cpf;
-    private String status;
+    private StatusFuncionario status;
 
     public Funcionario(String cpf, String nome) {
         this.cpf = cpf;
@@ -43,11 +44,11 @@ public class Funcionario {
         this.cpf = cpf;
     }
 
-    public String getStatus() {
+    public StatusFuncionario getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusFuncionario status) {
         this.status = status;
     }
 }
