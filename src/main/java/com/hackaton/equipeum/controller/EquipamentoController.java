@@ -2,6 +2,7 @@ package com.hackaton.equipeum.controller;
 
 import com.hackaton.equipeum.dto.EquipamentoDTO;
 import com.hackaton.equipeum.entity.Equipamento;
+import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
 import com.hackaton.equipeum.service.EquipamentoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,13 @@ public class EquipamentoController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<?> cadastro(@RequestParam("descricaoEquip") String descricao) {
-        return equipamentoService.cadastrarEquipamento(descricao);
+    public ResponseEntity<?> cadastro(
+            @RequestParam("modelo") String modelo,
+            @RequestParam("marca") String marca,
+            @RequestParam("cor") String cor,
+            @RequestParam("categoria") String categoria
+            ) {
+        return equipamentoService.cadastrarEquipamento(modelo, marca, cor, CategoriaEquipamento.valueOf(categoria));
     }
 
     @GetMapping("/buscar-todos")

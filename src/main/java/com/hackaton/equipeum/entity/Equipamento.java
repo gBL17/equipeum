@@ -11,16 +11,21 @@ public class Equipamento {
     @NotBlank
     private String patrimonio;
     @NotBlank
-    private String descricaoCompleta;
+    private Descricao descricaoCompleta;
 
     public Equipamento() {
     }
 
-    public Equipamento(String descricaoCompleta) {
+    public Equipamento(Descricao descricaoCompleta) {
         this.descricaoCompleta = descricaoCompleta;
     }
 
-    public Equipamento(String id, String patrimonio, String descricaoCompleta) {
+    public Equipamento(String patrimonio, Descricao descricaoCompleta) {
+        this.patrimonio = patrimonio;
+        this.descricaoCompleta = descricaoCompleta;
+    }
+
+    public Equipamento(String id, String patrimonio, Descricao descricaoCompleta) {
         this.id = id;
         this.patrimonio = patrimonio;
         this.descricaoCompleta = descricaoCompleta;
@@ -38,11 +43,11 @@ public class Equipamento {
         this.patrimonio = patrimonio;
     }
 
-    public String getDescricaoCompleta() {
+    public Descricao getDescricaoCompleta() {
         return descricaoCompleta;
     }
 
-    public void setDescricaoCompleta(String descricaoCompleta) {
+    public void setDescricaoCompleta(Descricao descricaoCompleta) {
         this.descricaoCompleta = descricaoCompleta;
     }
 }

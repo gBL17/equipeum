@@ -1,20 +1,22 @@
 package com.hackaton.equipeum.dto;
 
+import com.hackaton.equipeum.entity.Descricao;
+
 public class EquipamentoDTO {
-    private String descricaoCompleta;
+    private Descricao descricaoCompleta;
 
     public EquipamentoDTO() {
     }
 
-    public EquipamentoDTO(String descricaoCompleta) {
+    public EquipamentoDTO(Descricao descricaoCompleta) {
         this.descricaoCompleta = descricaoCompleta;
     }
 
-    public String getDescricaoCompleta() {
+    public Descricao getDescricaoCompleta() {
         return descricaoCompleta;
     }
 
-    public void setDescricaoCompleta(String descricaoCompleta) {
+    public void setDescricaoCompleta(Descricao descricaoCompleta) {
         this.descricaoCompleta = descricaoCompleta;
     }
 }
