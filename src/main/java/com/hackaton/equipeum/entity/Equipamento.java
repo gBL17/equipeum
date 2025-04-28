@@ -1,12 +1,11 @@
 package com.hackaton.equipeum.entity;
 
 import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
+import com.hackaton.equipeum.repository.EquipamentoRepository;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Document(collection = "equipamentos")
 public class Equipamento {
@@ -55,20 +54,4 @@ public class Equipamento {
         this.descricaoCompleta = descricaoCompleta;
     }
 
-    public static String gerarPatrimonio(CategoriaEquipamento categoria) {
-        Map<CategoriaEquipamento, String> prefixos = new HashMap<>();
-        prefixos.put(CategoriaEquipamento.NOTEBOOK, "NB-");
-        prefixos.put(CategoriaEquipamento.CADEIRA, "CD-");
-        prefixos.put(CategoriaEquipamento.MONITOR, "MT-");
-        prefixos.put(CategoriaEquipamento.MOUSE, "MS-");
-        prefixos.put(CategoriaEquipamento.TECLADO, "TL-");
-        prefixos.put(CategoriaEquipamento.OUTROS, "OUTROS");
-
-        Map<CategoriaEquipamento, Integer> numeros = new HashMap<>();
-        numeros.put(categoria, numeros.getOrDefault(categoria, 0) + 1);
-        Integer contador = numeros.get(categoria);
-
-        String resultado = prefixos.getOrDefault(categoria, "OUTROS");
-        return resultado + contador;
-    }
 }

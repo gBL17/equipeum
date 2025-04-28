@@ -14,10 +14,11 @@ import java.util.List;
 
 @Service
 public class EquipamentoService {
-    @Autowired
-    private EquipamentoRepository equipamentoRepository;
-    @Autowired
-    private EquipamentoMapper equipamentoMapper;
+    private final EquipamentoRepository equipamentoRepository;;
+
+    public EquipamentoService(EquipamentoRepository equipamentoRepository) {
+        this.equipamentoRepository = equipamentoRepository;
+    }
 
     public ResponseEntity<?> cadastrarEquipamento(String modelo, String marca, String cor, CategoriaEquipamento categoria) {
         Descricao descricao = new Descricao(modelo, marca, cor, categoria);
