@@ -16,10 +16,21 @@ public class Funcionario {
     @Indexed(unique = true)
     private String cpf;
     private StatusFuncionario status;
+    private String senha;
 
-    public Funcionario(String cpf, String nome) {
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public Funcionario(String cpf, String nome, String senha, StatusFuncionario status) {
         this.cpf = cpf;
         this.nome = nome;
+        this.senha = senha;
+        this.status = status;
     }
 
     public String getId() {

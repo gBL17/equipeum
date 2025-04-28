@@ -1,8 +1,9 @@
 package com.hackaton.equipeum.controller;
 
+import com.hackaton.equipeum.dto.CadastroDTO;
 import com.hackaton.equipeum.entity.Funcionario;
-import com.hackaton.equipeum.entity.enums.StatusFuncionario;
-import com.hackaton.equipeum.repository.FuncionarioRepository;
+import com.hackaton.equipeum.mapper.FuncionarioMapper;
+import com.hackaton.equipeum.service.FuncionarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -10,41 +11,43 @@ import java.util.List;
 @RestController
 @RequestMapping("/funcionario")
 public class FuncionarioController {
-    private final FuncionarioRepository funcionarioRepository;
+    private final FuncionarioService funcionarioService;
 
-    public FuncionarioController(FuncionarioRepository funcionarioRepository) {
-        this.funcionarioRepository = funcionarioRepository;
+    private final FuncionarioMapper funcionarioMapper;
+
+    public FuncionarioController(FuncionarioService funcionarioService, FuncionarioMapper funcionarioMapper) {
+        this.funcionarioService = funcionarioService;
+        this.funcionarioMapper = funcionarioMapper;
     }
 
     @PostMapping("/cadastro")
-    public Funcionario criarFuncionario(@RequestBody Funcionario funcionario) {
-        funcionario.setStatus(StatusFuncionario.Ativo);
-        return funcionarioRepository.save(funcionario);
+    public ResponseEntity<?> criarFuncionario(@RequestBody CadastroDTO cadastroDTO) {
+        return funcionarioService.criarFuncionario(funcionarioMapper.map(cadastroDTO));
     }
 
     @GetMapping("/buscar-todos")
     public ResponseEntity<List<Funcionario>> listarFuncionarios() {
-        List<Funcionario> funcionariosAtivos = funcionarioRepository.findByStatus(StatusFuncionario.Ativo);
-        return ResponseEntity.ok(funcionariosAtivos);
+        return funcionarioService.listarFuncionarios();
+    }
+
+    @GetMapping("/buscar-ativos")
+    public ResponseEntity<List<Funcionario>> listarFuncionariosAtivos() {
+        return funcionarioService.listarFuncionariosAtivos();
     }
 
     @PutMapping("/inativar/{id}")
-    public ResponseEntity<String> inativarFuncionario(@PathVariable String id) {
-        Funcionario funcionario = funcionarioRepository.findById(id).orElse(null);
-        if (funcionario == null) {
-            return ResponseEntity.notFound().build();
-        }
-        if (funcionario.getStatus() == StatusFuncionario.Inativo) {
-            return ResponseEntity.badRequest().body("Funcionário já está inativo.");
-        }
-        funcionario.setStatus(StatusFuncionario.Inativo);
-        funcionarioRepository.save(funcionario);
+    public ResponseEntity<?> inativarFuncionario(@PathVariable String id) {
+        return funcionarioService.inativarFuncionario(id);
+    }
 
-        return ResponseEntity.ok("Funcionário inativado com sucesso!");
+    @PutMapping("/inativar/{cpf}")
+    public ResponseEntity<?> inativarFuncionarioPorCpf(@PathVariable String cpf) {
+        return funcionarioService.inativarFuncionarioPorCpf(cpf);
     }
 
     @GetMapping("/login")
     public String getHtmlLogin() {
         return "telaLogin";
     }
+
 }
