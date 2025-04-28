@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro</title>
+    <title>Funcionários Ativos</title>
 </head>
 <body>
-<form action="/funcionario/cadastro" method="post">
-
-
-</form>
+<h2>Lista de Funcionários Ativos</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="funcionario : ${funcionarios}">
+        <td th:text="${funcionario.nome}">Nome</td>
+        <td th:text="${funcionario.CPF}">Email</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

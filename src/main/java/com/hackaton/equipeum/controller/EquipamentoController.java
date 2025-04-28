@@ -10,7 +10,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+@Controller
 @RequestMapping("/equipamento")
 public class EquipamentoController {
     private final EquipamentoService equipamentoService;
