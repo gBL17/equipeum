@@ -23,8 +23,8 @@ public class EquipamentoController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<?> cadastro(@RequestBody EquipamentoDTO equipamentoDTO) {
-        return equipamentoService.cadastrarEquipamento(equipamentoDTO);
+    public ResponseEntity<?> cadastro(@RequestParam("descricaoEquip") String descricao) {
+        return equipamentoService.cadastrarEquipamento(descricao);
     }
 
     @GetMapping("/buscar-todos")

@@ -17,7 +17,8 @@ public class EquipamentoService {
     @Autowired
     private EquipamentoMapper equipamentoMapper;
 
-    public ResponseEntity<?> cadastrarEquipamento(EquipamentoDTO equipamentoDTO) {
+    public ResponseEntity<?> cadastrarEquipamento(String descricao) {
+        EquipamentoDTO equipamentoDTO = new EquipamentoDTO(descricao);
         return ResponseEntity.status(200)
                 .body(equipamentoRepository
                         .save(EquipamentoMapper.map(equipamentoDTO)));

@@ -16,8 +16,7 @@ public class Equipamento {
     public Equipamento() {
     }
 
-    public Equipamento(String patrimonio, String descricaoCompleta) {
-        this.patrimonio = patrimonio;
+    public Equipamento(String descricaoCompleta) {
         this.descricaoCompleta = descricaoCompleta;
     }
 

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class EquipamentoMapper {
     public static Equipamento map(EquipamentoDTO equipamentoDTO){
         return new Equipamento(
-                equipamentoDTO.getPatrimonio(),
                 equipamentoDTO.getDescricaoCompleta()
         );
     }
