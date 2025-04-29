@@ -32,6 +32,11 @@ public class EmprestimoController {
         }
     }
 
+    @GetMapping("/solicitar")
+    public String solicitarPaginaEquipamento(){
+        return "solicitarEquipamento";
+    }
+
     public ResponseEntity<Emprestimo> solicitarEmprestimo(@RequestBody EmprestimoDTO emprestimoDTO) {
         return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
     }

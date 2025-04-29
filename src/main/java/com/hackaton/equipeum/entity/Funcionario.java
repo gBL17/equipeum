@@ -19,12 +19,7 @@ public class Funcionario {
     private StatusFuncionario status;
     private String senha;
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public Funcionario() {
     }
 
     public Funcionario(String cpf, String nome, String senha, StatusFuncionario status) {
@@ -64,5 +59,13 @@ public class Funcionario {
 
     public void setStatus(StatusFuncionario status) {
         this.status = status;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
