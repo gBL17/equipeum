@@ -93,7 +93,7 @@ public class FuncionarioController {
             return "redirect:/";
         } catch (IllegalArgumentException e) {
             model.addAttribute("erro", e.getMessage());
-            return "login";
+            return "telaLogin";
         }
     }
 
