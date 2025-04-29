@@ -1,13 +1,7 @@
 package com.hackaton.equipeum.service;
 
-import com.hackaton.equipeum.dto.CadastroDTO;
-import com.hackaton.equipeum.dto.EquipamentoDTO;
-import com.hackaton.equipeum.entity.Descricao;
-import com.hackaton.equipeum.entity.Equipamento;
 import com.hackaton.equipeum.entity.Funcionario;
-import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
 import com.hackaton.equipeum.entity.enums.StatusFuncionario;
-import com.hackaton.equipeum.mapper.EquipamentoMapper;
 import com.hackaton.equipeum.mapper.FuncionarioMapper;
 import com.hackaton.equipeum.repository.FuncionarioRepository;
 import org.springframework.http.HttpStatus;
@@ -15,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FuncionarioService {
@@ -25,6 +20,17 @@ public class FuncionarioService {
     public FuncionarioService(FuncionarioRepository funcionarioRepository, FuncionarioMapper funcionarioMapper) {
         this.funcionarioRepository = funcionarioRepository;
         this.funcionarioMapper = funcionarioMapper;
+    }
+
+    public Funcionario autenticar(String cpf, String senha) {
+        Optional<Funcionario> funcionarioOptional = funcionarioRepository.findByCpf(cpf);
+
+        Funcionario funcionario = funcionarioOptional.orElse(null);
+
+        if (funcionario != null && funcionario.getSenha().equals(senha)) {
+            return funcionario;
+        }
+        return null;
     }
 
     public ResponseEntity<?> inativarFuncionario(String id){

@@ -23,7 +23,7 @@ public class EmprestimoController {
 
     @PostMapping("/solicitar-equipamento")
     public ResponseEntity<Emprestimo> solicitarEmprestimo(@RequestBody EmprestimoDTO emprestimoDTO) {
-        return ResponseEntity.status(200).body(emprestimoService.solicitarEmprestimo(emprestimoDTO));
+        return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
     }
 
     @PatchMapping("/devolver-equipamento")

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitar Empréstimo</title>
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: 'Roboto', sans-serif;
+          background-color: #f2f2f2;
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        form {
+          width: 100%;
+          max-width: 600px;
+          background-color: rgba(255, 255, 255, 0.95);
+          padding: 40px;
+          border-radius: 12px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+          margin-top: 50px;
+        }
+
+        h2 {
+          text-align: center;
+          color: #333;
+          margin-bottom: 30px;
+          font-size: 26px;
+        }
+
+        label {
+          display: block;
+          margin-top: 15px;
+          font-weight: bold;
+          color: #444;
+        }
+
+        input, select {
+          width: 100%;
+          padding: 12px;
+          margin-top: 8px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          font-size: 16px;
+        }
+
+        button {
+          width: 100%;
+          padding: 14px;
+          background-color: #007BFF;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          margin-top: 25px;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+          background-color: #0056b3;
+        }
+
+        nav {
+          margin-top: 20px;
+          text-align: center;
+        }
+
+        nav a {
+          color: #007BFF;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        nav a:hover {
+          text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+          form {
+            margin: 20px;
+            padding: 30px;
+          }
+        }
+    </style>
+</head>
+<body>
+
+<form id="solicitarEmprestimoForm">
+    <h2>Solicitar Empréstimo</h2>
+
+    <label for="categoria">Categoria do Equipamento</label>
+    <select id="categoria" name="categoria" required>
+        <option value="">Selecione</option>
+        <option value="NOTEBOOK">Notebook</option>
+        <option value="CADEIRA">Cadeira</option>
+        <option value="MONITOR">Monitor</option>
+        <option value="TECLADO">Teclado</option>
+        <option value="MOUSE">Mouse</option>
+        <option value="OUTROS">Outros</option>
+    </select>
+
+    <label for="cpfFuncionario">CPF do Funcionário</label>
+    <input type="text" id="cpfFuncionario" name="cpfFuncionario" required placeholder="Digite o CPF">
+
+    <button type="button" onclick="solicitarEmprestimo()">Solicitar Empréstimo</button>
+
+    <nav>
+        <a href="/">Voltar ao Menu</a>
+    </nav>
+</form>
+
+<script>
+    async function solicitarEmprestimo() {
+        const categoria = document.getElementById('categoria').value;
+        const cpfFuncionario = document.getElementById('cpfFuncionario').value;
+
+        if (!categoria || !cpfFuncionario) {
+            alert('Por favor, preencha todos os campos.');
+            return;
+        }
+
+        const emprestimoDTO = {
+            categoria: categoria,
+            cpfFuncionario: cpfFuncionario
+        };
+
+        try {
+            const response = await fetch('/emprestimo/solicitar-equipamento', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(emprestimoDTO)
+            });
+
+            if (response.ok) {
+                alert('Empréstimo solicitado com sucesso!');
+                window.location.href = '/'; // Redireciona ao menu
+            } else {
+                const erro = await response.text();
+                alert('Erro ao solicitar empréstimo: ' + erro);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro de conexão com o servidor.');
+        }
+    }
+</script>
+
+</body>
+</html>
