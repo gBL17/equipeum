@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface FuncionarioRepository extends MongoRepository<Funcionario, String> {
     List<Funcionario> findByStatus(StatusFuncionario status);
     Optional<Funcionario> findByCpf(String cpf);
+//    Funcionario findByCpf(String cpf);
 }
 
