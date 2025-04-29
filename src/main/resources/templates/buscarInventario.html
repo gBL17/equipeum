@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Histórico de Equipamentos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f2f2;
+            padding: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button.buscar-btn {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button.buscar-btn:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            max-width: 1000px;
+            margin: auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .voltar {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .voltar:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Inventário</h2>
+
+<div class="form-container">
+</div>
+
+<table id="tabelaInventario">
+    <thead>
+    <tr>
+        <th>Patrimônio</th>
+        <th>Categoria</th>
+        <th>Status Empréstimo</th>
+        <th>Data de Solicitação</th>
+        <th>Data de Retirada</th>
+        <th>Data de Devolução</th>
+    </tr>
+    </thead>
+
+</table>
+
+<a href="/" class="voltar">Voltar ao Menu</a>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabela = document.getElementById("tabelaInventario");
+        tabela.innerHTML = "";
+
+
+        fetch(`/emprestimo/buscar-todos`)
+            .then(async response => {
+                if (response.status === 404) {
+                    tabela.innerHTML = "<tr><td colspan='6'>Nenhum equipamento encontrado.</td></tr>";
+                    return null;
+                } else if (!response.ok) {
+                    throw new Error("Erro ao buscar dados.");
+                }
+
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    return await response.json();
+                } else {
+                    throw new Error("Erro ao consultar dados.");
+                }
+            })
+            .then(data => {
+                if (!data) return;
+
+                data.forEach(item => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${item.patrimonio ?? '—'}</td>
+                        <td>${item.categoria}</td>
+                        <td>${item.statusEmprestimo}</td>
+                        <td>${formatarData(item.dataSolicitacao)}</td>
+                        <td>${formatarData(item.dataRetirada)}</td>
+                        <td>${formatarData(item.dataDevolucao)}</td>
+                    `;
+                    tabela.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error(error);
+                tabela.innerHTML = "<tr><td colspan='6'>Erro ao carregar os dados.</td></tr>";
+            });
+    });
+
+    function formatarData(dataIso) {
+        if (!dataIso) return '—';
+        const data = new Date(dataIso);
+        return data.toLocaleString('pt-BR');
+    }
+</script>
+
+</body>
+</html>

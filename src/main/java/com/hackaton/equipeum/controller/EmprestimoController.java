@@ -56,6 +56,11 @@ public class EmprestimoController {
     public ResponseEntity<List<Emprestimo>> pegarTodos() {
         return ResponseEntity.status(200).body(emprestimoService.pegarTodos());
     }
+    @GetMapping("/inventario")
+    public String buscarInventarioHtml(){
+            return "buscarInventario";
+    }
+
 
     @GetMapping("/obter-disponivel/{categoria}")
     public ResponseEntity<?> obterDisponivel(@PathVariable CategoriaEquipamento categoria) {
@@ -66,7 +71,7 @@ public class EmprestimoController {
         return ResponseEntity.status(200).body(equipamento);
     }
 
-    @GetMapping("/historio-equipamento/{patrimonio}")
+    @GetMapping("/historico-equipamento/{patrimonio}")
     public ResponseEntity<?> obterHistoricoEquipamento(@PathVariable String patrimonio){
         List<Emprestimo> emprestimos = emprestimoService.findAllByPatrimonio(patrimonio);
         if(!emprestimos.isEmpty()){
@@ -117,5 +122,9 @@ public class EmprestimoController {
         List<Emprestimo> emprestimos = emprestimoService.listarComprasPendentes();
         model.addAttribute("emprestimos", emprestimos);
         return "listarComprasPendentes";
+    }
+    @GetMapping("/historico-equipamento")
+    public String getHtmlHistoricoEquip() {
+        return "buscarPorPatrimonio";
     }
 }
