@@ -55,6 +55,7 @@
         .voltar {
             display: inline-block;
             margin-top: 20px;
+            margin-left: 90px;
             text-decoration: none;
             color: white;
             background-color: #007BFF;
@@ -113,6 +114,57 @@
 
         #popup button:hover {
             background-color: #0056b3;
+        }
+        form {
+            max-width: 450px;
+            margin: 0 auto 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        form label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        form select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        form button[type="submit"] {
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        .filtro-btn {
+            padding: 8px 16px;
+            background-color: #6c757d;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .filtro-btn:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
