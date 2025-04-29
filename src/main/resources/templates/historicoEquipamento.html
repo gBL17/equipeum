@@ -128,21 +128,27 @@
             return;
         }
 
-        // Chamada para o endpoint do backend
-        fetch(`/emprestimo/historico-funcionario?cpf=${cpf}`)
-            .then(response => {
-                if (!response.ok) throw new Error("Erro ao buscar dados");
-                return response.json();
+        fetch(`/emprestimo/historico-funcionario/${cpf}`)
+            .then(async response => {
+                if (response.status === 404) {
+                    tabela.innerHTML = "<tr><td colspan='6'>Funcionário não tem equipamentos emprestados.</td></tr>";
+                    return null;
+                } else if (!response.ok) {
+                    throw new Error("Erro ao buscar dados.");
+                }
+
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    return await response.json();
+                } else {
+                    throw new Error("Resposta não é JSON.");
+                }
             })
             .then(data => {
-                if (!data || data.length === 0) {
-                    tabela.innerHTML = "<tr><td colspan='6'>Nenhum histórico encontrado.</td></tr>";
-                    return;
-                }
+                if (!data) return;
 
                 data.forEach(item => {
                     const row = document.createElement("tr");
-
                     row.innerHTML = `
                         <td>${item.patrimonio ?? '—'}</td>
                         <td>${item.categoria}</td>
@@ -166,5 +172,6 @@
         return data.toLocaleString('pt-BR');
     }
 </script>
+
 </body>
 </html>

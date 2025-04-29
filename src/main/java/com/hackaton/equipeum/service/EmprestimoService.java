@@ -40,8 +40,10 @@ public class EmprestimoService {
             throw new FuncionarioDesligadoException();
         }
         List<Emprestimo> emprestimos = emprestimoRepository.findAllByCpfFuncionarioAndDataDevolucaoIsNull(emprestimoDTO.getCpfFuncionario());
-        if (!emprestimos.isEmpty()) {
-           throw new FuncionarioPossuiEquipamentoException();
+        for (Emprestimo value : emprestimos) {
+            if (value.getCategoria().equals(emprestimoDTO.getCategoria())) {
+                throw new FuncionarioPossuiEquipamentoException();
+            }
         }
 
         Equipamento equipamento = obterDisponivel(emprestimoDTO.getCategoria());
