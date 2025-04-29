@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
         * {
           box-sizing: border-box;
           margin: 0;
           padding: 0;
+          font-family: 'Roboto', sans-serif;
         }
 
         body {
-          font-family: 'Roboto', sans-serif;
           background-color: #f2f2f2;
           min-height: 100vh;
           display: flex;
@@ -19,14 +20,13 @@
           align-items: center;
         }
 
-        form {
+        .login-container {
           width: 100%;
           max-width: 400px;
           background-color: rgba(255, 255, 255, 0.95);
           padding: 40px;
           border-radius: 12px;
           box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-          margin-top: 50px;
         }
 
         h2 {
@@ -36,57 +36,66 @@
           font-size: 26px;
         }
 
-        form label {
+        .form-group {
+          margin-bottom: 20px;
+        }
+
+        label {
           display: block;
-          margin-top: 15px;
+          margin-bottom: 8px;
           font-weight: bold;
           color: #444;
         }
 
-        form input {
+        input {
           width: 100%;
           padding: 12px;
-          margin-top: 8px;
           border-radius: 6px;
           border: 1px solid #ccc;
           font-size: 16px;
         }
 
-        form button {
+        .btn-login {
           width: 100%;
           padding: 14px;
           background-color: #007BFF;
           color: white;
           border: none;
           border-radius: 8px;
-          margin-top: 25px;
           font-size: 16px;
           font-weight: bold;
           cursor: pointer;
           transition: background-color 0.3s ease;
         }
 
-        form button:hover {
+        .btn-login:hover {
           background-color: #0056b3;
         }
 
-        nav {
+        .nav-links {
           margin-top: 20px;
           text-align: center;
         }
 
-        nav a {
+        .nav-links a {
           color: #007BFF;
           text-decoration: none;
           font-weight: bold;
         }
 
-        nav a:hover {
+        .nav-links a:hover {
           text-decoration: underline;
         }
 
+        .error-message {
+          color: #dc3545;
+          margin-bottom: 15px;
+          text-align: center;
+          font-weight: bold;
+        }
+
         @media (max-width: 600px) {
-          form {
+          .login-container {
             margin: 20px;
             padding: 30px;
           }
@@ -94,20 +103,30 @@
     </style>
 </head>
 <body>
-<form action="/funcionario/login" method="get">
-    <h2>Login</h2>
+<div class="login-container">
+    <form action="/funcionario/login" method="post">
+        <h2>Login</h2>
 
-    <label for="cpf">CPF</label>
-    <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" required>
+        <!-- Mensagem de erro -->
+        <div th:if="${erro}" class="error-message" th:text="${erro}"></div>
 
-    <label for="senha">Senha</label>
-    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+        <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF (apenas números)"
+                   pattern="\d{11}" title="Digite os 11 números do CPF" required>
+        </div>
 
-    <button type="submit">Login</button>
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+        </div>
 
-    <nav>
-        <a href="/funcionario/cadastro">Cadastrar Funcionário</a>
-    </nav>
-</form>
+        <button type="submit" class="btn-login">Login</button>
+
+        <div class="nav-links">
+            <a href="/funcionario/cadastro">Cadastrar Funcionário</a>
+        </div>
+    </form>
+</div>
 </body>
 </html>

@@ -16,20 +16,19 @@ import java.util.List;
 @RequestMapping("/emprestimo")
 public class EmprestimoController {
     private final EmprestimoService emprestimoService ;
-
     public EmprestimoController(EmprestimoService emprestimoService) {
         this.emprestimoService = emprestimoService;
     }
 
-    @PostMapping("/solicitar-equipamento")
-    public ResponseEntity<Emprestimo> solicitarEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
-        return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
-    }
-
-    @PatchMapping("/devolver-equipamento")
-    public ResponseEntity<?> devolverEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
-        return emprestimoService.devolverEquipamento(emprestimoDTO);
-    }
+//    @PostMapping("/solicitar-equipamento")
+//    public ResponseEntity<Emprestimo> solicitarEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
+//        return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
+//    }
+//
+//    @PatchMapping("/devolver-equipamento")
+//    public ResponseEntity<?> devolverEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
+//        return emprestimoService.devolverEquipamento(emprestimoDTO);
+//    }
 
     @GetMapping("/verificar-disponibilidade/{patrimonio}")
     public ResponseEntity<Boolean> verificar(@PathVariable String patrimonio) {
@@ -50,6 +49,6 @@ public class EmprestimoController {
         return ResponseEntity.status(200).body(equipamento);
     }
 
-    @GetMapping("/historio-equipamento/{patrimonio}")
-    @GetMapping("/historio-funcionario/{cpf}")
+//    @GetMapping("/historio-equipamento/{patrimonio}")
+//    @GetMapping("/historio-funcionario/{cpf}")
 }

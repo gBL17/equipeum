@@ -35,12 +35,12 @@ public class EmprestimoService {
         return emprestimoRepository.save(emprestimo);
     }
 
-    public ResponseEntity<?> devolverEquipamento(EmprestimoDTO emprestimoDTO) {
-        Emprestimo emprestimo = emprestimoRepository.findByPatrimonio(emprestimoDTO.getPatrimonio());
-        emprestimo.setDataDevolucao(LocalDateTime.now());
-        return ResponseEntity.status(200)
-                .body(emprestimoRepository.save(emprestimo));
-    }
+//    public ResponseEntity<?> devolverEquipamento(EmprestimoDTO emprestimoDTO) {
+//        List<Emprestimo> emprestimos = emprestimoRepository.findAllByCategoria(emprestimoDTO.getCategoria());
+//        emprestimos.setDataDevolucao(LocalDateTime.now());
+//        return ResponseEntity.status(200)
+//                .body(emprestimoRepository.save(emprestimos));
+//    }
 
     public Boolean verificarDisponibilidade(String patrimonio) {
         List<Emprestimo> emprestimos =

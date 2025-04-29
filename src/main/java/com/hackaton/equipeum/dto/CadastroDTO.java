@@ -13,8 +13,7 @@ public class CadastroDTO {
     public CadastroDTO() {
     }
 
-    public CadastroDTO(String nome, String cpf, String senha) {
-        this.nome = nome;
+    public CadastroDTO(String cpf, String senha) {
         this.cpf = cpf;
         this.senha = senha;
     }

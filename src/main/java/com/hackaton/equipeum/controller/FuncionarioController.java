@@ -1,5 +1,6 @@
 package com.hackaton.equipeum.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import com.hackaton.equipeum.dto.CadastroDTO;
 import com.hackaton.equipeum.entity.Funcionario;
@@ -32,7 +33,7 @@ public class FuncionarioController {
     @GetMapping("/cadastro")
     public String exibirFormularioCadastro(Model model) {
         model.addAttribute("cadastroDTO", new CadastroDTO());
-        return "telaCadastro";
+        return "telaLogin";
     }
 
     @GetMapping("/buscar-todos")
@@ -55,13 +56,43 @@ public class FuncionarioController {
       return new RuntimeException("Não implementado");
     }
 
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(
+//            @RequestParam("cpf") String cpf,
+//            @RequestParam("senha") String senha
+//    ) {
+//        return ResponseEntity.ok("");
+//        return funcionarioService.loginFuncionario(cpf, senha);
+//    }
+
+//    @GetMapping("/")
+//    public  String getHtmlMenu() { return "index"; }
+
+    @PostMapping
+    public String getHtmlMenu(HttpSession session) {
+        if (session.getAttribute("usuarioLogado") == null) {
+            return "redirect:/funcionario/login";
+        }
+        return "index";
+    }
+
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(
-            @RequestParam("nome") String nome,
+    public String login(
             @RequestParam("cpf") String cpf,
-            @RequestParam("senha") String senha
+            @RequestParam("senha") String senha,
+            Model model,
+            HttpSession session
     ) {
-        return funcionarioService.loginFuncionario(nome, cpf, senha);
+        boolean loginValido = funcionarioService.loginFuncionario(cpf, senha);
+
+        if (loginValido) {
+            session.setAttribute("usuarioLogado", true);
+            return "index"; // Redireciona para o menu
+        } else {
+            model.addAttribute("erro", "CPF ou senha inválidos");
+            return "telaLogin";
+        }
     }
 
     @GetMapping("/login")

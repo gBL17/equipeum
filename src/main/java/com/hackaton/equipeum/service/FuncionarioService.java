@@ -74,9 +74,15 @@ public class FuncionarioService {
         return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioSalvo);
     }
 
-    public ResponseEntity<?> loginFuncionario(String nome, String cpf, String senha) {
-        CadastroDTO cadastroDTO = new CadastroDTO(nome, cpf, senha);
-        return ResponseEntity.status(200).body((Funcionario)this.funcionarioRepository.save(this.funcionarioMapper.map(cadastroDTO)));
+//    public ResponseEntity<?> loginFuncionario(String cpf, String senha) {
+//        CadastroDTO cadastroDTO = new CadastroDTO(cpf, senha);
+//        return ResponseEntity.status(200).body((Funcionario)this.funcionarioRepository.save(this.funcionarioMapper.map(cadastroDTO)));
+//    }
+
+    public boolean loginFuncionario(String cpf, String senha){
+        return funcionarioRepository.findByCpf(cpf)
+                .filter(funcionario -> funcionario.getSenha().equals(senha))
+                .isPresent();
     }
 
 }
