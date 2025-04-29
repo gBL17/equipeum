@@ -13,7 +13,6 @@ import com.hackaton.equipeum.mapper.EmprestimoMapper;
 import com.hackaton.equipeum.repository.EmprestimoRepository;
 import com.hackaton.equipeum.repository.EquipamentoRepository;
 import com.hackaton.equipeum.repository.FuncionarioRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

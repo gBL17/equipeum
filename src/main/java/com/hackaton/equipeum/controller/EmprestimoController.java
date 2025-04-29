@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/emprestimo")
@@ -60,7 +61,7 @@ public class EmprestimoController {
     public ResponseEntity<?> obterDisponivel(@PathVariable CategoriaEquipamento categoria) {
         Equipamento equipamento = emprestimoService.obterDisponivel(categoria);
         if (equipamento == null) {
-            return ResponseEntity.status(404).body("Nao existe item disponivel");
+            return ResponseEntity.status(404).body("Não existe item disponivel");
         }
         return ResponseEntity.status(200).body(equipamento);
     }
@@ -80,8 +81,8 @@ public class EmprestimoController {
         if (!emprestimosDTOS.isEmpty()){
             return ResponseEntity.status(HttpStatus.CREATED).body(emprestimosDTOS);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não tem equipamentos Emprestados");
-    }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("mensagem", "Funcionário não tem equipamentos emprestados"));    }
 
     @GetMapping("/listar-compras-pendentes")
     public ResponseEntity<?> listarComprasPendentes() {
