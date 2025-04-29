@@ -33,7 +33,7 @@ public class FuncionarioController {
     @GetMapping("/cadastro")
     public String exibirFormularioCadastro(Model model) {
         model.addAttribute("cadastroDTO", new CadastroDTO());
-        return "telaLogin";
+        return "telaCadastro";
     }
 
     @GetMapping("/buscar-todos")
