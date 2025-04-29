@@ -56,11 +56,12 @@ public class EmprestimoService {
     }
 
     public Emprestimo devolverEquipamento(EmprestimoDTO emprestimoDTO) {
-        Emprestimo emprestimo = emprestimoRepository.findByCategoriaAndCpfFuncionario(emprestimoDTO.getCategoria(), emprestimoDTO.getCpfFuncionario());
-        if (emprestimo != null){
+        Emprestimo emprestimo = emprestimoRepository.findByPatrimonio(emprestimoDTO.getPatrimonio());
+        if (emprestimo != null) {
             emprestimo.setDataDevolucao(LocalDateTime.now());
             return emprestimoRepository.save(emprestimo);
-        } return null;
+        }
+        return null;
     }
 
     public Boolean verificarDisponibilidade(String patrimonio) {

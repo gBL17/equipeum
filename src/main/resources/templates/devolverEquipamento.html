@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" >
+    <meta charset="UTF-8">
     <title>Devolução de equipamento</title>
     <style>
         * {
@@ -44,7 +44,7 @@
           color: #444;
         }
 
-        form input, form select {
+        form select {
           width: 100%;
           padding: 12px;
           margin-top: 8px;
@@ -86,7 +86,6 @@
           text-decoration: underline;
         }
 
-        /* Popup */
         #popup {
           display: none;
           position: fixed;
@@ -130,21 +129,22 @@
           }
         }
     </style>
-
 </head>
 <body>
 
-<form id="devolucaoForm" action="/emprestimo/devolver-equipamento" method="patch">
+<form id="devolucaoForm" action="/emprestimo/devolver-equipamento">
     <h2>Devolução de equipamento</h2>
+
     <label for="item">Lista de equipamentos</label>
-    <select id="item" name="item">
+    <select id="item" name="item" required>
         <option disabled selected value> -- selecione -- </option>
         <th:block th:each="emprestimo : ${emprestimos}">
             <option th:value="${emprestimo.patrimonio}"
                     th:text="'Patrimônio: ' + ${emprestimo.patrimonio} + ' | Categoria: ' + ${emprestimo.categoria}">
             </option>
         </th:block>
-    </select></br>
+    </select><br>
+
     <button type="submit">Confirmar</button><br>
     <nav>
         <a href="/">Voltar</a>
@@ -166,23 +166,30 @@
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
 
-        const formData = new FormData(form);
+        const patrimonio = document.getElementById('item').value;
+
+        const dto = {
+            patrimonio: patrimonio
+        };
 
         try {
             const response = await fetch(form.action, {
-                method: form.method,
-                body: formData
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dto)
             });
 
             if (response.ok) {
                 mostrarPopup('Item devolvido com sucesso!');
-                form.reset(); // Limpa o formulário
+                setTimeout(() => location.reload(), 1500);
             } else {
                 mostrarPopup('Erro ao devolver equipamento.');
             }
         } catch (error) {
             console.error('Erro:', error);
-            mostrarPopup('Erro de conexão ao efetuar devoluçãp.');
+            mostrarPopup('Erro de conexão ao efetuar devolução.');
         }
     });
 

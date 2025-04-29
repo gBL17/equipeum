@@ -35,10 +35,9 @@ public class EmprestimoController {
         return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
     }
 
-    @PostMapping("/devolver-equipamento")
+    @PatchMapping("/devolver-equipamento")
     public ResponseEntity<?> devolverEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
-        emprestimoService.devolverEquipamento(emprestimoDTO);
-        return ResponseEntity.ok("Devolvido com sucesso");
+        return ResponseEntity.status(HttpStatus.OK).body(emprestimoService.devolverEquipamento(emprestimoDTO));
     }
 
     @GetMapping("/verificar-disponibilidade/{patrimonio}")
