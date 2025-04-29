@@ -74,18 +74,6 @@ public class FuncionarioController {
         return ResponseEntity.status(200).body(emprestimos);
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(
-//            @RequestParam("cpf") String cpf,
-//            @RequestParam("senha") String senha
-//    ) {
-//        return ResponseEntity.ok("");
-//        return funcionarioService.loginFuncionario(cpf, senha);
-//    }
-
-//    @GetMapping("/")
-//    public  String getHtmlMenu() { return "index"; }
-
     @PostMapping
     public String getHtmlMenu(HttpSession session) {
         if (session.getAttribute("usuarioLogado") == null) {
@@ -99,13 +87,12 @@ public class FuncionarioController {
                         @RequestParam String senha,
                         HttpSession session,
                         Model model) {
-        Funcionario funcionario = funcionarioService.autenticar(cpf, senha);
-
-        if (funcionario != null) {
+        try {
+            Funcionario funcionario = funcionarioService.autenticar(cpf, senha);
             session.setAttribute("usuarioLogado", funcionario);
             return "redirect:/";
-        } else {
-            model.addAttribute("erro", "CPF ou senha inválidos.");
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erro", e.getMessage());
             return "login";
         }
     }

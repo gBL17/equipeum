@@ -89,4 +89,11 @@ public class FuncionarioService {
         Optional<Funcionario> funcionario = funcionarioRepository.findByCpf(cpf);
         return funcionario.get().getStatus();
     }
+
+    public Funcionario autenticar(String cpf, String senha) {
+        return funcionarioRepository.findAll().stream()
+                .filter(f -> f.getCpf().equals(cpf) && f.getSenha().equals(senha))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("CPF ou senha inválidos"));
+    }
 }
