@@ -40,21 +40,6 @@
         tr:hover {
             background-color: #f1f1f1;
         }
-
-        .btn-detalhes {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .btn-detalhes:hover {
-            background-color: #218838;
-        }
     </style>
 </head>
 <body>
@@ -66,21 +51,16 @@
         <th>Modelo</th>
         <th>Marca</th>
         <th>Cor</th>
-<!--        <th>Ações</th>-->
     </tr>
     </thead>
     <tbody>
     <tr th:each="equipamento : ${equipamentos}">
-        <td th:text="${equipamento.patrimonio}"></td>
-        <td th:text="${equipamento.descricaoCompleta.modelo}"></td>
-        <td th:text="${equipamento.descricaoCompleta.marca}"></td>
-        <td th:text="${equipamento.descricaoCompleta.cor}"></td>
-<!--        <td>-->
-<!--            <a th:href="@{'/equipamentos/' + ${equipamento.id}}" class="btn-detalhes">Detalhes</a>-->
-<!--        </td>-->
+        <td th:text="${equipamento.patrimonio}">Patrimônio</td>
+        <td th:text="${equipamento.descricaoCompleta.modelo}">Modelo</td>
+        <td th:text="${equipamento.descricaoCompleta.marca}">Marca</td>
+        <td th:text="${equipamento.descricaoCompleta.cor}">Cor</td>
     </tr>
     </tbody>
 </table>
 </body>
 </html>
-

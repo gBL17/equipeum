@@ -40,12 +40,11 @@ public class EquipamentoController {
         return equipamentoService.listarEquipamentos();
     }
 
-    @GetMapping("/equipamentos")
+    @GetMapping("/buscar-equipamentos")
     public String listarEquipamentos(Model model) {
         List<Equipamento> equipamentos = equipamentoService.listarEquipamentos().getBody();
         model.addAttribute("equipamentos", equipamentos);
         return "buscarEquip";
     }
-
 
 }
