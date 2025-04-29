@@ -103,9 +103,22 @@ public class FuncionarioController {
     }
 
     @GetMapping("/listar")
-    public String listarFuncionarios(Model model) {
-        List<Funcionario> funcionarios = funcionarioService.listarFuncionarios().getBody();
+    public String listarFuncionarios(@RequestParam(required = false) String status, Model model) {
+        List<Funcionario> funcionarios;
+
+        if (status == null || status.isBlank()) {
+            funcionarios = funcionarioService.listarFuncionarios().getBody();
+        } else {
+            try {
+                StatusFuncionario statusEnum = StatusFuncionario.valueOf(status.toUpperCase());
+                funcionarios = funcionarioService.listarFuncionariosPorStatus(statusEnum).getBody();
+            } catch (IllegalArgumentException e) {
+                funcionarios = funcionarioService.listarFuncionarios().getBody();
+            }
+        }
+
         model.addAttribute("funcionarios", funcionarios);
+        model.addAttribute("statusSelecionado", status);
         return "listaFuncionarios";
     }
 

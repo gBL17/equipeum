@@ -119,6 +119,17 @@
 <body>
 <h2>Funcionários</h2>
 
+<form method="get" action="/funcionario/listar">
+    <label for="status">Filtrar por Status:</label>
+    <select name="status" id="status">
+        <option value="" th:selected="${statusSelecionado == null}">Todos</option>
+        <option value="Ativo" th:selected="${statusSelecionado == 'Ativo'}">Ativo</option>
+        <option value="Inativo" th:selected="${statusSelecionado == 'Inativo'}">Inativo</option>
+    </select>
+    <button type="submit">Filtrar</button>
+    <a href="/funcionario/listar" class="filtro-btn">Limpar Filtro</a>
+</form>
+
 <table>
     <thead>
     <tr>
