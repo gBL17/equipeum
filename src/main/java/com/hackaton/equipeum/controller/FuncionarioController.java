@@ -1,9 +1,11 @@
 package com.hackaton.equipeum.controller;
 
+import org.springframework.ui.Model;
 import com.hackaton.equipeum.dto.CadastroDTO;
 import com.hackaton.equipeum.entity.Funcionario;
 import com.hackaton.equipeum.mapper.FuncionarioMapper;
 import com.hackaton.equipeum.service.FuncionarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +24,15 @@ public class FuncionarioController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<?> criarFuncionario(@RequestBody CadastroDTO cadastroDTO) {
-        return funcionarioService.criarFuncionario(funcionarioMapper.map(cadastroDTO));
+    public ResponseEntity<?> criarFuncionario(@RequestBody @Valid CadastroDTO cadastroDTO) {
+        Funcionario funcionario = funcionarioMapper.map(cadastroDTO);
+        return funcionarioService.criarFuncionario(funcionario);
+    }
+
+    @GetMapping("/cadastro")
+    public String exibirFormularioCadastro(Model model) {
+        model.addAttribute("cadastroDTO", new CadastroDTO());
+        return "telaCadastro";
     }
 
     @GetMapping("/buscar-todos")

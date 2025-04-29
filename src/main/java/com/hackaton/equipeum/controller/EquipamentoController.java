@@ -40,12 +40,11 @@ public class EquipamentoController {
         return equipamentoService.listarEquipamentos();
     }
 
-    @GetMapping("/equipamentos")
-    public String listarEquipamentos(Model model) {  // <-- precisa ter o Model aqui
+    @GetMapping("/buscar-equipamentos")
+    public String listarEquipamentos(Model model) {
         List<Equipamento> equipamentos = equipamentoService.listarEquipamentos().getBody();
-        model.addAttribute("equipamentos", equipamentos);  // <-- aqui você usa o model
-        return "buscarEquip"; // nome do seu HTML
+        model.addAttribute("equipamentos", equipamentos);
+        return "buscarEquip";
     }
-
 
 }
