@@ -12,4 +12,8 @@ import java.util.List;
 public interface EmprestimoRepository extends MongoRepository<Emprestimo, String> {
     List<Emprestimo> findAllByPatrimonioAndDataDevolucaoIsNull(String patrimonio);
     List<Emprestimo> findAllByCategoria(CategoriaEquipamento categoria);
+    List<Emprestimo> findAllByPatrimonio(String patrimonio);
+    List<Emprestimo> findAllByCpfFuncionario(String cpfFuncionario);
+    Emprestimo findByCategoriaAndCpfFuncionario(CategoriaEquipamento categoria, String cpfFuncionario);
+    List<Emprestimo> findAllByCategoriaAndPatrimonioIsNull(CategoriaEquipamento categoria);
 }

@@ -35,12 +35,13 @@ public class EmprestimoService {
         return emprestimoRepository.save(emprestimo);
     }
 
-//    public ResponseEntity<?> devolverEquipamento(EmprestimoDTO emprestimoDTO) {
-//        List<Emprestimo> emprestimos = emprestimoRepository.findAllByCategoria(emprestimoDTO.getCategoria());
-//        emprestimos.setDataDevolucao(LocalDateTime.now());
-//        return ResponseEntity.status(200)
-//                .body(emprestimoRepository.save(emprestimos));
-//    }
+    public Emprestimo devolverEquipamento(EmprestimoDTO emprestimoDTO) {
+        Emprestimo emprestimo = emprestimoRepository.findByCategoriaAndCpfFuncionario(emprestimoDTO.getCategoria(), emprestimoDTO.getCpfFuncionario());
+        if (emprestimo != null){
+            emprestimo.setDataDevolucao(LocalDateTime.now());
+            return emprestimoRepository.save(emprestimo);
+        } return null;
+    }
 
     public Boolean verificarDisponibilidade(String patrimonio) {
         List<Emprestimo> emprestimos =
@@ -61,5 +62,13 @@ public class EmprestimoService {
         }
         return null;
     }
-}
 
+    public List<Emprestimo> findAllByPatrimonio(String patrimonio) {
+        return emprestimoRepository.findAllByPatrimonio(patrimonio);
+    }
+
+    public List<EmprestimoDTO> findAllByCpf(String cpf) {
+        List<Emprestimo> emprestimos = emprestimoRepository.findAllByCpfFuncionario(cpf);
+        return EmprestimoMapper.map(emprestimos);
+    }
+}

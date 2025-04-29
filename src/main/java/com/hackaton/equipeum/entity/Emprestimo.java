@@ -1,9 +1,11 @@
 package com.hackaton.equipeum.entity;
 
 import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
+import com.hackaton.equipeum.entity.enums.StatusEmprestimo;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -22,6 +24,8 @@ public class Emprestimo {
     private LocalDateTime dataSolicitacao;
     private LocalDateTime dataRetirada;
     private LocalDateTime dataDevolucao;
+    @Transient
+    private StatusEmprestimo statusEmprestimo;
 
     public Emprestimo() {
     }
@@ -97,5 +101,20 @@ public class Emprestimo {
 
     public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
         this.dataSolicitacao = dataSolicitacao;
+    }
+
+    public StatusEmprestimo getStatusEmprestimo() {
+        if (getPatrimonio() == null){
+            return StatusEmprestimo.AGUARDANDO_COMPRA;
+        } else if (getDataDevolucao() != null) {
+            return StatusEmprestimo.DEVOLVIDO;
+        } else if (getDataRetirada() != null) {
+            return StatusEmprestimo.EMPRESTADO;
+        }
+        return null;
+    }
+
+    public void setStatusEmprestimo(StatusEmprestimo statusEmprestimo) {
+        this.statusEmprestimo = statusEmprestimo;
     }
 }

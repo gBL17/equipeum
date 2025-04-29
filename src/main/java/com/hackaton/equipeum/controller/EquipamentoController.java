@@ -1,5 +1,6 @@
 package com.hackaton.equipeum.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import com.hackaton.equipeum.entity.Equipamento;
 import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
@@ -27,7 +28,8 @@ public class EquipamentoController {
             @RequestParam("cor") String cor,
             @RequestParam("categoria") String categoria
             ) {
-        return equipamentoService.cadastrarEquipamento(modelo, marca, cor, CategoriaEquipamento.valueOf(categoria));
+        Equipamento equipamento = equipamentoService.cadastrarEquipamento(modelo, marca, cor, CategoriaEquipamento.valueOf(categoria));
+        return ResponseEntity.status(HttpStatus.CREATED).body(equipamento);
     }
 
     @GetMapping("/cadastro")

@@ -16,19 +16,20 @@ import java.util.List;
 @RequestMapping("/emprestimo")
 public class EmprestimoController {
     private final EmprestimoService emprestimoService ;
+
     public EmprestimoController(EmprestimoService emprestimoService) {
         this.emprestimoService = emprestimoService;
     }
 
-//    @PostMapping("/solicitar-equipamento")
-//    public ResponseEntity<Emprestimo> solicitarEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
-//        return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
-//    }
-//
-//    @PatchMapping("/devolver-equipamento")
-//    public ResponseEntity<?> devolverEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
-//        return emprestimoService.devolverEquipamento(emprestimoDTO);
-//    }
+    @PostMapping("/solicitar-equipamento")
+    public ResponseEntity<Emprestimo> solicitarEmprestimo(@RequestBody EmprestimoDTO emprestimoDTO) {
+        return ResponseEntity.status(200).body(emprestimoService.solicitarEmprestimo(emprestimoDTO));
+    }
+
+    @PatchMapping("/devolver-equipamento")
+    public ResponseEntity<?> devolverEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(emprestimoService.devolverEquipamento(emprestimoDTO));
+    }
 
     @GetMapping("/verificar-disponibilidade/{patrimonio}")
     public ResponseEntity<Boolean> verificar(@PathVariable String patrimonio) {
@@ -49,6 +50,21 @@ public class EmprestimoController {
         return ResponseEntity.status(200).body(equipamento);
     }
 
-//    @GetMapping("/historio-equipamento/{patrimonio}")
-//    @GetMapping("/historio-funcionario/{cpf}")
+    @GetMapping("/historio-equipamento/{patrimonio}")
+    public ResponseEntity<?> obterHistoricoEquipamento(@PathVariable String patrimonio){
+        List<Emprestimo> emprestimos = emprestimoService.findAllByPatrimonio(patrimonio);
+        if(!emprestimos.isEmpty()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(emprestimos);
+        }
+        return ResponseEntity.status(404).body("Equipamento não possui histórico disponível!");
+    }
+
+    @GetMapping("/historico-funcionario/{cpf}")
+    public ResponseEntity<?> obterEmprestimosFuncionario(@PathVariable String cpf){
+        List<EmprestimoDTO> emprestimosDTOS = emprestimoService.findAllByCpf(cpf);
+        if (!emprestimosDTOS.isEmpty()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(emprestimosDTOS);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não tem equipamento Emprestados");
+    }
 }
