@@ -3,13 +3,15 @@ package com.hackaton.equipeum.controller;
 import com.hackaton.equipeum.dto.EmprestimoDTO;
 import com.hackaton.equipeum.entity.Emprestimo;
 import com.hackaton.equipeum.entity.Equipamento;
+import com.hackaton.equipeum.entity.Funcionario;
 import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
 import com.hackaton.equipeum.service.EmprestimoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
@@ -21,7 +23,7 @@ public class EmprestimoController {
         this.emprestimoService = emprestimoService;
     }
 
-    @PostMapping("/solicitar-equipamento")
+    @PatchMapping("/solicitar-equipamento")
     public ResponseEntity<?> solicitarEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
         try {
             return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
@@ -32,9 +34,10 @@ public class EmprestimoController {
         return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
     }
 
-    @PatchMapping("/devolver-equipamento")
+    @PostMapping("/devolver-equipamento")
     public ResponseEntity<?> devolverEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(emprestimoService.devolverEquipamento(emprestimoDTO));
+        emprestimoService.devolverEquipamento(emprestimoDTO);
+        return ResponseEntity.ok("Devolvido com sucesso");
     }
 
     @GetMapping("/verificar-disponibilidade/{patrimonio}")
@@ -71,11 +74,36 @@ public class EmprestimoController {
         if (!emprestimosDTOS.isEmpty()){
             return ResponseEntity.status(HttpStatus.CREATED).body(emprestimosDTOS);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não tem equipamento Emprestados");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não tem equipamentos Emprestados");
     }
 
     @GetMapping("/listar-compras-pendentes")
     public ResponseEntity<?> listarComprasPendentes() {
         return ResponseEntity.status(200).body(emprestimoService.listarComprasPendentes());
     }
+
+    @PostMapping("/emprestimos-funcionario/{cpf}")
+    public ResponseEntity<?> buscaEmprestados(@PathVariable String cpf){
+        List<EmprestimoDTO> emprestimoDTOS = emprestimoService.findAllCurrentByCpf(cpf);
+        if (!emprestimoDTOS.isEmpty()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(emprestimoDTOS);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não tem equipamentos Emprestados");
+    }
+
+    @GetMapping("/devolucao")
+    public String carregarTelaDevolucao(HttpSession session, Model model) {
+        Funcionario funcionario = (Funcionario) session.getAttribute("usuarioLogado");
+
+        if (funcionario == null) {
+            return "telaLogin";
+        }
+
+        List<EmprestimoDTO> emprestimos = emprestimoService.findAllCurrentByCpf(funcionario.getCpf());
+        model.addAttribute("emprestimos", emprestimos);
+        return "devolverEquipamento";
+    }
+
+
+
 }

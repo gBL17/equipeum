@@ -49,4 +49,6 @@ public class EquipamentoController {
         return "buscarEquip";
     }
 
+
+
 }

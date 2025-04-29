@@ -134,7 +134,7 @@
 </head>
 <body>
 
-<form id="devolucaoForm" action="/equipamento/devolucao" method="post">
+<form id="devolucaoForm" action="/emprestimo/devolver-equipamento" method="patch">
     <h2>Devolução de equipamento</h2>
     <label for="item">Lista de equipamentos</label>
     <select id="item" name="item">
@@ -159,7 +159,7 @@
 </div>
 
 <script>
-    const form = document.getElementById('cadastroForm');
+    const form = document.getElementById('devolucaoForm');
     const popup = document.getElementById('popup');
     const popupMessage = document.getElementById('popupMessage');
 

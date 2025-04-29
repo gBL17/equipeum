@@ -101,4 +101,9 @@ public class EmprestimoService {
         List<Emprestimo> emprestimos = emprestimoRepository.findAllByPatrimonioIsNull();
         return emprestimos;
     }
+
+    public List<EmprestimoDTO> findAllCurrentByCpf(String cpf){
+        List<Emprestimo> emprestimos = emprestimoRepository.findAllByCpfFuncionario(cpf);
+        return EmprestimoMapper.mapEmprestados(emprestimos);
+    }
 }

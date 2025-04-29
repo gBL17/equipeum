@@ -2,8 +2,8 @@ package com.hackaton.equipeum.mapper;
 
 import com.hackaton.equipeum.dto.EmprestimoDTO;
 import com.hackaton.equipeum.entity.Emprestimo;
+import com.hackaton.equipeum.entity.enums.StatusEmprestimo;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +34,16 @@ public class EmprestimoMapper {
         List<EmprestimoDTO> emprestimoDTOS = new ArrayList<>();
         for (Emprestimo emprestimo : emprestimos){
             emprestimoDTOS.add(map(emprestimo));
+        }
+        return emprestimoDTOS;
+    }
+
+    public static List<EmprestimoDTO> mapEmprestados(List<Emprestimo> emprestimos){
+        List<EmprestimoDTO> emprestimoDTOS = new ArrayList<>();
+        for (Emprestimo emprestimo : emprestimos){
+            if (emprestimo.getStatusEmprestimo() == StatusEmprestimo.EMPRESTADO){
+                emprestimoDTOS.add(map(emprestimo));
+            }
         }
         return emprestimoDTOS;
     }
