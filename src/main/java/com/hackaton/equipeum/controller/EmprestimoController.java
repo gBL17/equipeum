@@ -31,6 +31,7 @@ public class EmprestimoController {
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(e.getMessage());
         }
     }
+
     public ResponseEntity<Emprestimo> solicitarEmprestimo(@RequestBody EmprestimoDTO emprestimoDTO) {
         return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
     }

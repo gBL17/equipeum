@@ -15,6 +15,7 @@ import com.hackaton.equipeum.repository.FuncionarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -101,5 +102,4 @@ public class FuncionarioService {
         List<Funcionario> funcionarios = funcionarioRepository.findByStatus(status);
         return ResponseEntity.ok(funcionarios);
     }
-
 }

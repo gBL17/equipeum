@@ -162,24 +162,37 @@
 </div>
 
 <script>
+    let cpfParaInativar = null;
+
     document.querySelectorAll('.inativar-btn').forEach(button => {
         button.addEventListener('click', () => {
-            const cpf = button.getAttribute('data-cpf');
-            const url = `funcionario/inativar-cpf/${cpf}`;  // Certifique-se de que o endpoint está correto no backend.
+            cpfParaInativar = button.getAttribute('data-cpf');
+            mostrarPopup("Deseja inativar este funcionário?", true);
+        });
+    });
 
-            // Exibe o popup para confirmar ação
-            mostrarPopup("Deseja inativar este funcionário?");
+    function mostrarPopup(msg, confirmar = false) {
+        const popupMessage = document.getElementById("popupMessage");
+        const popup = document.getElementById("popup");
+        const popupButton = document.querySelector("#popup button");
 
-            // Quando o usuário confirma
-            document.querySelector("#popup button").onclick = () => {
-                // Envia a requisição PUT para inativar o funcionário
-                fetch(url, {
+        popupMessage.innerText = msg;
+        popup.style.display = "flex";
+
+        // Remove event listeners antigos
+        const newButton = popupButton.cloneNode(true);
+        popupButton.parentNode.replaceChild(newButton, popupButton);
+
+        // Define comportamento do botão
+        if (confirmar) {
+            newButton.onclick = () => {
+                fetch(`/funcionario/inativar-cpf/${cpfParaInativar}`, {
                     method: 'PUT'
                 })
                 .then(response => {
                     if (response.ok) {
                         mostrarPopup("Funcionário inativado com sucesso.");
-                        setTimeout(() => location.reload(), 1500); // Recarrega a página após 1,5s
+                        setTimeout(() => location.reload(), 1500);
                     } else {
                         mostrarPopup("Erro ao inativar funcionário.");
                     }
@@ -187,20 +200,17 @@
                 .catch(() => {
                     mostrarPopup("Erro de conexão.");
                 });
-                fecharPopup();  // Fecha o popup
             };
-        });
-    });
-
-    function mostrarPopup(msg) {
-        document.getElementById("popupMessage").innerText = msg;
-        document.getElementById("popup").style.display = "flex";
+        } else {
+            newButton.onclick = fecharPopup;
+        }
     }
 
     function fecharPopup() {
         document.getElementById("popup").style.display = "none";
     }
 </script>
+
 
 </body>
 </html>
