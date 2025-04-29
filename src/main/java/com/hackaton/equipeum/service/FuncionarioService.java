@@ -96,4 +96,10 @@ public class FuncionarioService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("CPF ou senha inválidos"));
     }
+
+    public ResponseEntity<List<Funcionario>> listarFuncionariosPorStatus(StatusFuncionario status) {
+        List<Funcionario> funcionarios = funcionarioRepository.findByStatus(status);
+        return ResponseEntity.ok(funcionarios);
+    }
+
 }
