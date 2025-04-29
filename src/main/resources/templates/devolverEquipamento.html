@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Devolução de equipamento</title>
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: 'Roboto', sans-serif;
+          background-color: #f2f2f2;
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+        }
+
+        form {
+          width: 100%;
+          max-width: 600px;
+          background-color: rgba(255, 255, 255, 0.95);
+          padding: 40px;
+          border-radius: 12px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+          margin-top: 50px;
+        }
+
+        h2 {
+          text-align: center;
+          color: #333;
+          margin-bottom: 30px;
+          font-size: 26px;
+        }
+
+        form label {
+          display: block;
+          margin-top: 15px;
+          font-weight: bold;
+          color: #444;
+        }
+
+        form input, form select {
+          width: 100%;
+          padding: 12px;
+          margin-top: 8px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          font-size: 16px;
+        }
+
+        form button {
+          width: 100%;
+          padding: 14px;
+          background-color: #007BFF;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          margin-top: 25px;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+          background-color: #0056b3;
+        }
+
+        nav {
+          margin-top: 20px;
+          text-align: center;
+        }
+
+        nav a {
+          color: #007BFF;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        nav a:hover {
+          text-decoration: underline;
+        }
+
+        /* Popup */
+        #popup {
+          display: none;
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0,0,0,0.5);
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+        }
+
+        #popupContent {
+          background: white;
+          padding: 30px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          text-align: center;
+          font-size: 20px;
+          color: #333;
+          max-width: 300px;
+        }
+
+        #popup button {
+          margin-top: 20px;
+          padding: 10px 20px;
+          border: none;
+          background-color: #007BFF;
+          color: white;
+          border-radius: 6px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+        #popup button:hover {
+          background-color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+          form {
+            margin: 20px;
+            padding: 30px;
+          }
+        }
+    </style>
+
+</head>
+<body>
+
+<form id="devolucaoForm" action="/equipamento/devolucao" method="post">
+    <h2>Devolução de equipamento</h2>
+    <label for="item">Lista de equipamentos</label>
+    <select id="item" name="item">
+        <option disabled selected value> -- selecione -- </option>
+        <th:block th:each="emprestimo : ${emprestimos}">
+            <option th:value="${emprestimo.patrimonio}"
+                    th:text="'Patrimônio: ' + ${emprestimo.patrimonio} + ' | Categoria: ' + ${emprestimo.categoria}">
+            </option>
+        </th:block>
+    </select></br>
+    <button type="submit">Confirmar</button><br>
+    <nav>
+        <a href="/">Voltar</a>
+    </nav>
+</form>
+
+<div id="popup">
+    <div id="popupContent">
+        <p id="popupMessage"></p>
+        <button onclick="fecharPopup()">OK</button>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('cadastroForm');
+    const popup = document.getElementById('popup');
+    const popupMessage = document.getElementById('popupMessage');
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData
+            });
+
+            if (response.ok) {
+                mostrarPopup('Item devolvido com sucesso!');
+                form.reset(); // Limpa o formulário
+            } else {
+                mostrarPopup('Erro ao devolver equipamento.');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            mostrarPopup('Erro de conexão ao efetuar devoluçãp.');
+        }
+    });
+
+    function mostrarPopup(mensagem) {
+        popupMessage.textContent = mensagem;
+        popup.style.display = 'flex';
+    }
+
+    function fecharPopup() {
+        popup.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
