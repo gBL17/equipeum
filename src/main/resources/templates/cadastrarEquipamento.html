@@ -17,6 +17,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          position: relative;
         }
 
         form {
@@ -85,6 +86,43 @@
           text-decoration: underline;
         }
 
+        /* Popup */
+        #popup {
+          display: none;
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0,0,0,0.5);
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+        }
+
+        #popupContent {
+          background: white;
+          padding: 30px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          text-align: center;
+          font-size: 20px;
+          color: #333;
+          max-width: 300px;
+        }
+
+        #popup button {
+          margin-top: 20px;
+          padding: 10px 20px;
+          border: none;
+          background-color: #007BFF;
+          color: white;
+          border-radius: 6px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+        #popup button:hover {
+          background-color: #0056b3;
+        }
+
         @media (max-width: 600px) {
           form {
             margin: 20px;
@@ -96,30 +134,74 @@
 </head>
 <body>
 
-<form action="/equipamento/cadastro" method="post">
+<form id="cadastroForm" action="/equipamento/cadastro" method="post">
     <h2>Cadastro de equipamento</h2>
     <label for="categoria">Categoria</label>
     <select id="categoria" name="categoria">
-
-        <option id="notebook" name="notebook" value="NOTEBOOK"> Notebook</option>
-        <option id="cadeira" name="cadeira" value="CADEIRA"> Cadeira</option>
-        <option id="monitor" name="monitor" value="MONITOR"> Monitor</option>
-        <option id="teclado" name="teclado" value="TECLADO"> Teclado</option>
-        <option id="mouse" name="mouse" value="MOUSE"> Mouse</option>
-        <option id="outros" name="outros" value="OUTROS"> Outros</option>
-
-    </select></br>
+        <option value="NOTEBOOK"> Notebook</option>
+        <option value="CADEIRA"> Cadeira</option>
+        <option value="MONITOR"> Monitor</option>
+        <option value="TECLADO"> Teclado</option>
+        <option value="MOUSE"> Mouse</option>
+        <option value="OUTROS"> Outros</option>
+    </select><br>
     <label for="modelo">Modelo</label>
-    <input type="text" id="modelo" name="modelo" required></br>
+    <input type="text" id="modelo" name="modelo" required><br>
     <label for="marca">Marca</label>
-    <input type="text" id="marca" name="marca" required></br>
+    <input type="text" id="marca" name="marca" required><br>
     <label for="cor">Cor</label>
-    <input type="text" id="cor" name="cor" required></br>
+    <input type="text" id="cor" name="cor" required><br>
 
-    <button type="submit"> Cadastrar </button></br>
+    <button type="submit">Cadastrar</button><br>
     <nav>
         <a href="/">Voltar</a>
     </nav>
 </form>
+
+<div id="popup">
+    <div id="popupContent">
+        <p id="popupMessage"></p>
+        <button onclick="fecharPopup()">OK</button>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('cadastroForm');
+    const popup = document.getElementById('popup');
+    const popupMessage = document.getElementById('popupMessage');
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData
+            });
+
+            if (response.ok) {
+                mostrarPopup('Cadastro realizado com sucesso!');
+                form.reset(); // Limpa o formulário
+            } else {
+                mostrarPopup('Erro ao cadastrar equipamento.');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            mostrarPopup('Erro de conexão ao tentar cadastrar.');
+        }
+    });
+
+    function mostrarPopup(mensagem) {
+        popupMessage.textContent = mensagem;
+        popup.style.display = 'flex';
+    }
+
+    function fecharPopup() {
+        popup.style.display = 'none';
+    }
+</script>
+
 </body>
 </html>

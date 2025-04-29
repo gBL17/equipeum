@@ -23,7 +23,7 @@ public class EmprestimoService {
         this.emprestimoRepository = emprestimoRepository;
     }
 
-    public Emprestimo solicitarEmprestimo(EmprestimoDTO emprestimoDTO) {
+    public Emprestimo solicitarEquipamento(EmprestimoDTO emprestimoDTO) {
         Equipamento equipamento = obterDisponivel(emprestimoDTO.getCategoria());
         Emprestimo emprestimo = EmprestimoMapper.map(emprestimoDTO);
         emprestimo.setDataSolicitacao(LocalDateTime.now());
