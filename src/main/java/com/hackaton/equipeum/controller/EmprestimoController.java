@@ -96,7 +96,10 @@ public class EmprestimoController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não tem equipamentos Emprestados");
     }
-
+    @GetMapping("/historico-funcionario")
+    public String getHtmlHistorico(){
+        return "historicoEquipamento";
+    }
     @GetMapping("/devolucao")
     public String carregarTelaDevolucao(HttpSession session, Model model) {
         Funcionario funcionario = (Funcionario) session.getAttribute("usuarioLogado");
@@ -104,7 +107,6 @@ public class EmprestimoController {
         if (funcionario == null) {
             return "telaLogin";
         }
-
         List<EmprestimoDTO> emprestimos = emprestimoService.findAllCurrentByCpf(funcionario.getCpf());
         model.addAttribute("emprestimos", emprestimos);
         return "devolverEquipamento";
