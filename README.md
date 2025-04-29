@@ -21,7 +21,8 @@ Nosso Projeto é um **Sistema de Gestão de Equipamentos da Empresa** que permit
 - Registro de Empréstimo e devolução de equipamentos;
 - Visualização do histórico de movimentação por equipamento e por funcionário;
 - Solicitação e consulta de status de desligamento de um funcionário;
-- Consulta de funcionários com pendências de devolução de equipamento para desligamento.
+- Consulta de funcionários com pendências de devolução de equipamento para desligamento;
+- Reconhecer ausencia de equipamento solicitado no sistema e gerar automaticamente uma solicitação de compra. Uma vez comprado, o equipamento automaticamente será vinculado à primeira pessoa a solicitar o equipamento.
 
 ## 📐5. Arquitetura do Projeto
 
@@ -37,6 +38,7 @@ Nosso Projeto é um **Sistema de Gestão de Equipamentos da Empresa** que permit
 - Framework: Spring Boot
 - Gerenciamento de API: Postman
 - Gerenciador de dependências: Maven
+- Formatação FrontEnd: Ajjax
 
 - Dependências:
 
@@ -47,6 +49,7 @@ Nosso Projeto é um **Sistema de Gestão de Equipamentos da Empresa** que permit
 ## 💻7. Telas do Sistema
 
 - Tela de cadastro;
+- Tela de login
 - Menu Principal;
 - Lista de Equipamentos;
 - Lista de Funcionários;

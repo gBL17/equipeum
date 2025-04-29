@@ -94,22 +94,19 @@ public class FuncionarioController {
         return "index";
     }
 
-
     @PostMapping("/login")
-    public String login(
-            @RequestParam("cpf") String cpf,
-            @RequestParam("senha") String senha,
-            Model model,
-            HttpSession session
-    ) {
-        boolean loginValido = funcionarioService.loginFuncionario(cpf, senha);
+    public String login(@RequestParam String cpf,
+                        @RequestParam String senha,
+                        HttpSession session,
+                        Model model) {
+        Funcionario funcionario = funcionarioService.autenticar(cpf, senha);
 
-        if (loginValido) {
-            session.setAttribute("usuarioLogado", true);
-            return "index"; // Redireciona para o menu
+        if (funcionario != null) {
+            session.setAttribute("usuarioLogado", funcionario);
+            return "redirect:/";
         } else {
-            model.addAttribute("erro", "CPF ou senha inválidos");
-            return "telaLogin";
+            model.addAttribute("erro", "CPF ou senha inválidos.");
+            return "login";
         }
     }
 
@@ -118,6 +115,11 @@ public class FuncionarioController {
         return "telaLogin";
     }
 
-
+    @GetMapping("/listar")
+    public String listarFuncionarios(Model model) {
+        List<Funcionario> funcionarios = funcionarioService.listarFuncionarios().getBody();
+        model.addAttribute("funcionarios", funcionarios);
+        return "listaFuncionarios";
+    }
 
 }
