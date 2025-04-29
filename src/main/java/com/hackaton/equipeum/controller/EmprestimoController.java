@@ -103,7 +103,10 @@ public class EmprestimoController {
         model.addAttribute("emprestimos", emprestimos);
         return "devolverEquipamento";
     }
-
-
-
+    @GetMapping("/compras-pendentes")
+    public String listarComprasPendentes(Model model) {
+        List<Emprestimo> emprestimos = emprestimoService.listarComprasPendentes();
+        model.addAttribute("emprestimos", emprestimos);
+        return "listarComprasPendentes";
+    }
 }
