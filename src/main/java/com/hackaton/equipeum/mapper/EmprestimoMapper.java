@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class EmprestimoMapper {
     public static Emprestimo map(EmprestimoDTO emprestimoDTO){
         return new Emprestimo(
-                emprestimoDTO.getPatrimonio(),
+                emprestimoDTO.getCategoria(),
                 emprestimoDTO.getCpf(),
                 LocalDateTime.now()
         );

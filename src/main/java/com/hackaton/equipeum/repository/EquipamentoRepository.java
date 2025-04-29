@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface EquipamentoRepository extends MongoRepository<Equipamento, String> {
     long countByDescricaoCompletaCategoria(CategoriaEquipamento categoria);
+    List<Equipamento> findAllByDescricaoCompletaCategoria(CategoriaEquipamento categoria);
 
+    List<Equipamento> findAllByPatrimonio(String patrimonio);
 }

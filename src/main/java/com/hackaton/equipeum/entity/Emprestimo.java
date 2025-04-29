@@ -1,5 +1,6 @@
 package com.hackaton.equipeum.entity;
 
+import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
@@ -12,25 +13,33 @@ public class Emprestimo {
 
     @Id
     private String id;
-    @NotBlank
     private String patrimonio;
     @NotBlank
-    private String responsavel;
+    private CategoriaEquipamento categoria;
+    @NotBlank
+    private String cpfFuncionario;
     @NotNull
+    private LocalDateTime dataSolicitacao;
     private LocalDateTime dataRetirada;
     private LocalDateTime dataDevolucao;
 
     public Emprestimo() {
     }
 
-    public Emprestimo(String patrimonio, String responsavel, LocalDateTime dataRetirada) {
-        this.patrimonio = patrimonio;
-        this.responsavel = responsavel;
-        this.dataRetirada = dataRetirada;
+    public Emprestimo(CategoriaEquipamento categoria, String cpfFuncionario, LocalDateTime dataSolicitacao) {
+        this.categoria = categoria;
+        this.cpfFuncionario = cpfFuncionario;
+        this.dataSolicitacao = dataSolicitacao;
     }
 
-    public Emprestimo(String responsavel, String patrimonio) {
-        this.responsavel = responsavel;
+    public Emprestimo(String patrimonio, CategoriaEquipamento categoria, String cpfFuncionario) {
+        this.patrimonio = patrimonio;
+        this.categoria = categoria;
+        this.cpfFuncionario = cpfFuncionario;
+    }
+
+    public Emprestimo(String cpfFuncionario, String patrimonio) {
+        this.cpfFuncionario = cpfFuncionario;
         this.patrimonio = patrimonio;
     }
 
@@ -50,12 +59,12 @@ public class Emprestimo {
         this.id = id;
     }
 
-    public String getResponsavel() {
-        return responsavel;
+    public String getCpfFuncionario() {
+        return cpfFuncionario;
     }
 
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
+    public void setCpfFuncionario(String cpfFuncionario) {
+        this.cpfFuncionario = cpfFuncionario;
     }
 
     public LocalDateTime getDataRetirada() {
@@ -72,5 +81,21 @@ public class Emprestimo {
 
     public void setDataDevolucao(LocalDateTime dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
+    }
+
+    public CategoriaEquipamento getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaEquipamento categoria) {
+        this.categoria = categoria;
+    }
+
+    public LocalDateTime getDataSolicitacao() {
+        return dataSolicitacao;
+    }
+
+    public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
+        this.dataSolicitacao = dataSolicitacao;
     }
 }

@@ -1,16 +1,18 @@
 package com.hackaton.equipeum.dto;
 
+import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
+
 public class EmprestimoDTO {
 
     private String cpf;
-    private String patrimonio;
+    private CategoriaEquipamento categoria;
 
     public EmprestimoDTO() {
     }
 
-    public EmprestimoDTO(String cpf, String patrimonio) {
+    public EmprestimoDTO(String cpf, CategoriaEquipamento categoria) {
         this.cpf = cpf;
-        this.patrimonio = patrimonio;
+        this.categoria = categoria;
     }
 
     public String getCpf() {
@@ -21,11 +23,11 @@ public class EmprestimoDTO {
         this.cpf = cpf;
     }
 
-    public String getPatrimonio() {
-        return patrimonio;
+    public CategoriaEquipamento getCategoria() {
+        return categoria;
     }
 
-    public void setPatrimonio(String patrimonio) {
-        this.patrimonio = patrimonio;
+    public void setCategoria(CategoriaEquipamento categoria) {
+        this.categoria = categoria;
     }
 }

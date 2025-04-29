@@ -32,4 +32,6 @@ public class EquipamentoService {
     public ResponseEntity<List<Equipamento>> listarEquipamentos() {
         return ResponseEntity.status(200).body(equipamentoRepository.findAll());
     }
+
+
 }

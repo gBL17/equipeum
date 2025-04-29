@@ -2,7 +2,6 @@ package com.hackaton.equipeum.controller;
 
 import com.hackaton.equipeum.dto.CadastroDTO;
 import com.hackaton.equipeum.entity.Funcionario;
-import com.hackaton.equipeum.entity.enums.CategoriaEquipamento;
 import com.hackaton.equipeum.mapper.FuncionarioMapper;
 import com.hackaton.equipeum.service.FuncionarioService;
 import org.springframework.http.ResponseEntity;
@@ -37,14 +36,14 @@ public class FuncionarioController {
         return funcionarioService.listarFuncionariosAtivos();
     }
 
-    @PutMapping("/inativar/{id}")
-    public ResponseEntity<?> inativarFuncionario(@PathVariable String id) {
-        return funcionarioService.inativarFuncionario(id);
-    }
-
     @PutMapping("/inativar-cpf/{cpf}")
     public ResponseEntity<?> inativarFuncionarioPorCpf(@PathVariable String cpf) {
         return funcionarioService.inativarFuncionarioPorCpf(cpf);
+    }
+
+    @GetMapping("/consultar-desligamento/{cpf}")
+    public RuntimeException consultarDesligamento(@PathVariable String cpf)throws Exception {
+      return new RuntimeException("Não implementado");
     }
 
     @PostMapping("/login")
@@ -60,5 +59,7 @@ public class FuncionarioController {
     public String getHtmlLogin() {
         return "telaLogin";
     }
+
+
 
 }
