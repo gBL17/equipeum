@@ -97,4 +97,11 @@ public class FuncionarioController {
         return "telaLogin";
     }
 
+    @GetMapping("/listar")
+    public String listarFuncionarios(Model model) {
+        List<Funcionario> funcionarios = funcionarioService.listarFuncionarios().getBody();
+        model.addAttribute("funcionarios", funcionarios);
+        return "listaFuncionarios";
+    }
+
 }
