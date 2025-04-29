@@ -16,4 +16,6 @@ public interface EmprestimoRepository extends MongoRepository<Emprestimo, String
     List<Emprestimo> findAllByCpfFuncionario(String cpfFuncionario);
     Emprestimo findByCategoriaAndCpfFuncionario(CategoriaEquipamento categoria, String cpfFuncionario);
     List<Emprestimo> findAllByCategoriaAndPatrimonioIsNull(CategoriaEquipamento categoria);
+    List<Emprestimo> findAllByCpfFuncionarioAndDataDevolucaoIsNull(String cpfFuncionario);
+    List<Emprestimo> findAllByPatrimonioIsNull();
 }

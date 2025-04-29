@@ -1,6 +1,10 @@
 package com.hackaton.equipeum.controller;
 
+import com.hackaton.equipeum.entity.Emprestimo;
+import com.hackaton.equipeum.entity.enums.StatusFuncionario;
+import com.hackaton.equipeum.service.EmprestimoService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import com.hackaton.equipeum.dto.CadastroDTO;
 import com.hackaton.equipeum.entity.Funcionario;
@@ -16,11 +20,12 @@ import java.util.List;
 @RequestMapping("/funcionario")
 public class FuncionarioController {
     private final FuncionarioService funcionarioService;
-
+    private final EmprestimoService emprestimoService;
     private final FuncionarioMapper funcionarioMapper;
 
-    public FuncionarioController(FuncionarioService funcionarioService, FuncionarioMapper funcionarioMapper) {
+    public FuncionarioController(FuncionarioService funcionarioService, EmprestimoService emprestimoService, FuncionarioMapper funcionarioMapper) {
         this.funcionarioService = funcionarioService;
+        this.emprestimoService = emprestimoService;
         this.funcionarioMapper = funcionarioMapper;
     }
 
@@ -48,12 +53,25 @@ public class FuncionarioController {
 
     @PutMapping("/inativar-cpf/{cpf}")
     public ResponseEntity<?> inativarFuncionarioPorCpf(@PathVariable String cpf) {
-        return funcionarioService.inativarFuncionarioPorCpf(cpf);
+        try {
+            return ResponseEntity.status(200).body(funcionarioService.inativarFuncionarioPorCpf(cpf));
+        } catch (Exception e) {
+          return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(e.getMessage());
+        }
     }
 
     @GetMapping("/consultar-desligamento/{cpf}")
-    public RuntimeException consultarDesligamento(@PathVariable String cpf)throws Exception {
-      return new RuntimeException("Não implementado");
+    public ResponseEntity<StatusFuncionario> consultarDesligamento(@PathVariable String cpf) {
+      return ResponseEntity.status(200).body(funcionarioService.consultarDesligamento(cpf));
+    }
+
+    @GetMapping("/consultar-pendencias/{cpf}")
+    public ResponseEntity<List<Emprestimo>> consultarPendencias(@PathVariable String cpf) {
+        List<Emprestimo> emprestimos = emprestimoService.consultarPendencias(cpf);
+        if (emprestimos.isEmpty()) {
+            return ResponseEntity.status(404).body(emprestimos);
+        }
+        return ResponseEntity.status(200).body(emprestimos);
     }
 
 //    @PostMapping("/login")

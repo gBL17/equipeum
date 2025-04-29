@@ -22,8 +22,12 @@ public class EmprestimoController {
     }
 
     @PostMapping("/solicitar-equipamento")
-    public ResponseEntity<Emprestimo> solicitarEmprestimo(@RequestBody EmprestimoDTO emprestimoDTO) {
-        return ResponseEntity.status(200).body(emprestimoService.solicitarEmprestimo(emprestimoDTO));
+    public ResponseEntity<?> solicitarEquipamento(@RequestBody EmprestimoDTO emprestimoDTO) {
+        try {
+            return ResponseEntity.status(200).body(emprestimoService.solicitarEquipamento(emprestimoDTO));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(e.getMessage());
+        }
     }
 
     @PatchMapping("/devolver-equipamento")
@@ -66,5 +70,10 @@ public class EmprestimoController {
             return ResponseEntity.status(HttpStatus.CREATED).body(emprestimosDTOS);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funcionário não tem equipamento Emprestados");
+    }
+
+    @GetMapping("/listar-compras-pendentes")
+    public ResponseEntity<?> listarComprasPendentes() {
+        return ResponseEntity.status(200).body(emprestimoService.listarComprasPendentes());
     }
 }
